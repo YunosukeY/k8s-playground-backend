@@ -7,7 +7,7 @@ require (
 	github.com/gorilla/securecookie v1.1.1
 	github.com/segmentio/kafka-go v0.4.38
 	github.com/spf13/cobra v1.6.1
-	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.36.4
+	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.37.0
 	go.opentelemetry.io/otel v1.11.2
 	go.opentelemetry.io/otel/sdk v1.11.2
 	go.opentelemetry.io/otel/trace v1.11.2
