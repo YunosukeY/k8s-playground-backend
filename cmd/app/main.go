@@ -31,7 +31,7 @@ var appCmd = &cobra.Command{
 	Use:   "app",
 	Short: "Run an app server",
 	Run: func(cmd *cobra.Command, args []string) {
-		app.Run()
+		app.Run(false)
 	},
 }
 

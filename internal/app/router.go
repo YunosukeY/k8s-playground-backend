@@ -52,12 +52,18 @@ func (r router) handler() *gin.Engine {
 	return router
 }
 
-func Run() {
+func Run(dummy bool) {
 	zerolog.SetGlobalLevel(zerolog.DebugLevel)
 	log.Logger = log.With().Caller().Logger()
 	gin.SetMode(gin.ReleaseMode)
 
-	r, shutdownProvider := initializeRouter("app")
+	var r router
+	var shutdownProvider func()
+	if !dummy {
+		r, shutdownProvider = initializeRouter("app")
+	} else {
+		r, shutdownProvider = initializeDummyRouter("app")
+	}
 	defer shutdownProvider()
 
 	go util.RunPodCommonHandler()

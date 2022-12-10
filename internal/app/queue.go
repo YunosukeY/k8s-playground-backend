@@ -63,3 +63,18 @@ func (q queue) push(ctx context.Context, mail Mail) error {
 	}
 	return err
 }
+
+type dummyQueue struct {
+	t trace.Tracer
+}
+
+func newDummyQueue(t trace.Tracer) Queue {
+	return dummyQueue{t}
+}
+
+func (q dummyQueue) push(ctx context.Context, mail Mail) error {
+	_, span := q.t.Start(ctx, util.FuncName())
+	defer span.End()
+
+	return nil
+}
