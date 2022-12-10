@@ -39,7 +39,7 @@ var authCmd = &cobra.Command{
 	Use:   "auth",
 	Short: "Run an auth server",
 	Run: func(cmd *cobra.Command, args []string) {
-		auth.Run()
+		auth.Run(false)
 	},
 }
 

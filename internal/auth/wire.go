@@ -12,3 +12,8 @@ func initializeRouter(service string) (router, func()) {
 	wire.Build(newRouter, newController, util.NewTracer, newCache, newRedis)
 	return router{}, func() {}
 }
+
+func initializeDummyRouter(service string) (router, func()) {
+	wire.Build(newRouter, newController, util.NewTracer, newDummyCache)
+	return router{}, func() {}
+}

@@ -2,6 +2,7 @@ package auth
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/YunosukeY/kind-backend/internal/util"
 	"github.com/go-redis/redis/extra/redisotel/v9"
@@ -63,4 +64,45 @@ func (c cache) delete(ctx context.Context, key string) error {
 		log.Error().Err(err).Msg("")
 	}
 	return err
+}
+
+type dummyCache struct {
+	t trace.Tracer
+	m map[string]string
+}
+
+func newDummyCache(t trace.Tracer) Cache {
+	m := map[string]string{}
+	return dummyCache{t, m}
+}
+
+func (c dummyCache) get(ctx context.Context, key string) (string, error) {
+	_, span := c.t.Start(ctx, util.FuncName())
+	defer span.End()
+
+	v, ok := c.m[key]
+	if !ok {
+		err := fmt.Errorf("no such key: %s", key)
+		log.Error().Err(err).Msg("")
+		return "", err
+	}
+	return v, nil
+}
+
+func (c dummyCache) set(ctx context.Context, key string, value string) error {
+	_, span := c.t.Start(ctx, util.FuncName())
+	defer span.End()
+
+	c.m[key] = value
+
+	return nil
+}
+
+func (c dummyCache) delete(ctx context.Context, key string) error {
+	_, span := c.t.Start(ctx, util.FuncName())
+	defer span.End()
+
+	delete(c.m, key)
+
+	return nil
 }
