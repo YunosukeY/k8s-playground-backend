@@ -73,17 +73,17 @@ type dummyRepository struct {
 }
 
 func newDummyRepository(t trace.Tracer) Repository {
-	return dummyRepository{t: t, totalSize: 0, todos: []TodoForResponse{}}
+	return &dummyRepository{t: t, totalSize: 0, todos: []TodoForResponse{}}
 }
 
-func (r dummyRepository) findAllTodos(ctx context.Context) ([]TodoForResponse, error) {
+func (r *dummyRepository) findAllTodos(ctx context.Context) ([]TodoForResponse, error) {
 	_, span := r.t.Start(ctx, util.FuncName())
 	defer span.End()
 
 	return r.todos, nil
 }
 
-func (r dummyRepository) createTodo(ctx context.Context, todo TodoForPostRequest) (*TodoForResponse, error) {
+func (r *dummyRepository) createTodo(ctx context.Context, todo TodoForPostRequest) (*TodoForResponse, error) {
 	_, span := r.t.Start(ctx, util.FuncName())
 	defer span.End()
 
