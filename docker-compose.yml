@@ -14,7 +14,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./k8s/app/mysql/init:/docker-entrypoint-initdb.d
+      - ./mysql/init:/docker-entrypoint-initdb.d
   cache:
     image: redis:7.0.5-alpine3.16
     container_name: cache
@@ -44,7 +44,7 @@ services:
       - 8025:8025
   app:
     image: backend
-    build: backend
+    build: .
     container_name: app
     entrypoint: ["main", "app"]
     ports:
@@ -60,7 +60,7 @@ services:
     restart: on-failure:10
   auth:
     image: backend
-    build: backend
+    build: .
     container_name: auth
     entrypoint: ["main", "auth"]
     ports:
@@ -71,7 +71,7 @@ services:
     restart: on-failure:10
   mail:
     image: backend
-    build: backend
+    build: .
     container_name: mail
     entrypoint: ["main", "mail"]
     environment:
