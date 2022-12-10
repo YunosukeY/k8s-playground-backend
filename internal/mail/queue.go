@@ -3,6 +3,7 @@ package mail
 import (
 	"context"
 	"encoding/json"
+	"time"
 
 	"github.com/YunosukeY/kind-backend/internal/app"
 	"github.com/YunosukeY/kind-backend/internal/util"
@@ -74,6 +75,8 @@ func newDummyQueue(t trace.Tracer) Queue {
 func (q dummyQueue) pop(ctx context.Context) (*app.Mail, error) {
 	_, span := q.t.Start(ctx, util.FuncName())
 	defer span.End()
+
+	time.Sleep(time.Second * 10)
 
 	sub := "title"
 	msg := "msg"
