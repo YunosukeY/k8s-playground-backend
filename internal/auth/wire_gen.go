@@ -22,3 +22,13 @@ func initializeRouter(service string) (router, func()) {
 		cleanup()
 	}
 }
+
+func initializeDummyRouter(service string) (router, func()) {
+	tracer, cleanup := util.NewTracer(service)
+	authCache := newDummyCache(tracer)
+	authController := newController(tracer, authCache)
+	authRouter := newRouter(authController)
+	return authRouter, func() {
+		cleanup()
+	}
+}

@@ -11,13 +11,17 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
+type Mailer interface {
+	send(ctx context.Context, mail app.Mail) error
+}
+
 type mailer struct {
 	t    trace.Tracer
 	auth smtp.Auth
 	addr string
 }
 
-func newMailer(t trace.Tracer) mailer {
+func newMailer(t trace.Tracer) Mailer {
 	username := util.GetParamString("MAIL_USER", "user")
 	password := util.GetParamString("MAIL_PASS", "pass")
 	auth := smtp.CRAMMD5Auth(username, password)
@@ -37,4 +41,19 @@ func (m mailer) send(ctx context.Context, mail app.Mail) error {
 		log.Error().Err(err).Msg("")
 	}
 	return err
+}
+
+type dummyMailer struct {
+	t trace.Tracer
+}
+
+func newDummyMailer(t trace.Tracer) Mailer {
+	return dummyMailer{t}
+}
+
+func (m dummyMailer) send(ctx context.Context, mail app.Mail) error {
+	_, span := m.t.Start(ctx, util.FuncName())
+	defer span.End()
+
+	return nil
 }

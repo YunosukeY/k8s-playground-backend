@@ -26,12 +26,17 @@ func newDB() *gorm.DB {
 	return db
 }
 
+type Repository interface {
+	findAllTodos(ctx context.Context) ([]TodoForResponse, error)
+	createTodo(ctx context.Context, todo TodoForPostRequest) (*TodoForResponse, error)
+}
+
 type repository struct {
 	t  trace.Tracer
 	db *gorm.DB
 }
 
-func newRepository(t trace.Tracer, db *gorm.DB) repository {
+func newRepository(t trace.Tracer, db *gorm.DB) Repository {
 	return repository{t, db}
 }
 
@@ -59,4 +64,32 @@ func (r repository) createTodo(ctx context.Context, todo TodoForPostRequest) (*T
 		return nil, res.Error
 	}
 	return todoWithID, nil
+}
+
+type dummyRepository struct {
+	t         trace.Tracer
+	totalSize int
+	todos     []TodoForResponse
+}
+
+func newDummyRepository(t trace.Tracer) Repository {
+	return &dummyRepository{t: t, totalSize: 0, todos: []TodoForResponse{}}
+}
+
+func (r *dummyRepository) findAllTodos(ctx context.Context) ([]TodoForResponse, error) {
+	_, span := r.t.Start(ctx, util.FuncName())
+	defer span.End()
+
+	return r.todos, nil
+}
+
+func (r *dummyRepository) createTodo(ctx context.Context, todo TodoForPostRequest) (*TodoForResponse, error) {
+	_, span := r.t.Start(ctx, util.FuncName())
+	defer span.End()
+
+	todoWithID := TodoForResponse{ID: r.totalSize, Content: todo.Content}
+	r.todos = append(r.todos, todoWithID)
+	r.totalSize++
+
+	return &todoWithID, nil
 }

@@ -3,6 +3,7 @@ package mail
 import (
 	"context"
 	"encoding/json"
+	"time"
 
 	"github.com/YunosukeY/kind-backend/internal/app"
 	"github.com/YunosukeY/kind-backend/internal/util"
@@ -32,12 +33,16 @@ func newReader() *kafka.Reader {
 	return r
 }
 
+type Queue interface {
+	pop(ctx context.Context) (*app.Mail, error)
+}
+
 type queue struct {
 	t trace.Tracer
 	r *kafka.Reader
 }
 
-func newQueue(t trace.Tracer, r *kafka.Reader) queue {
+func newQueue(t trace.Tracer, r *kafka.Reader) Queue {
 	return queue{t, r}
 }
 
@@ -56,5 +61,26 @@ func (q queue) pop(ctx context.Context) (*app.Mail, error) {
 		log.Error().Err(err).Msg("")
 		return nil, err
 	}
+	return &mail, nil
+}
+
+type dummyQueue struct {
+	t trace.Tracer
+}
+
+func newDummyQueue(t trace.Tracer) Queue {
+	return dummyQueue{t}
+}
+
+func (q dummyQueue) pop(ctx context.Context) (*app.Mail, error) {
+	_, span := q.t.Start(ctx, util.FuncName())
+	defer span.End()
+
+	time.Sleep(time.Second * 10)
+
+	sub := "title"
+	msg := "msg"
+	mail := app.Mail{To: "test@example.com", Sub: &sub, Msg: &msg}
+
 	return &mail, nil
 }

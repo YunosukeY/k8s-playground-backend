@@ -24,3 +24,14 @@ func initializeRouter(service string) (router, func()) {
 		cleanup()
 	}
 }
+
+func initializeDummyRouter(service string) (router, func()) {
+	tracer, cleanup := util.NewTracer(service)
+	appRepository := newDummyRepository(tracer)
+	appQueue := newDummyQueue(tracer)
+	appController := newController(tracer, appRepository, appQueue)
+	appRouter := newRouter(appController)
+	return appRouter, func() {
+		cleanup()
+	}
+}

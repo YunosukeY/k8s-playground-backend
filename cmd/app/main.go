@@ -23,15 +23,19 @@ func execute() {
 }
 func init() {
 	rootCmd.AddCommand(appCmd)
+	appCmd.Flags().BoolP("dummy", "d", false, "run with dummy middleware")
 	rootCmd.AddCommand(authCmd)
+	authCmd.Flags().BoolP("dummy", "d", false, "run with dummy middleware")
 	rootCmd.AddCommand(mailCmd)
+	mailCmd.Flags().BoolP("dummy", "d", false, "run with dummy middleware")
 }
 
 var appCmd = &cobra.Command{
 	Use:   "app",
 	Short: "Run an app server",
 	Run: func(cmd *cobra.Command, args []string) {
-		app.Run()
+		dummy, _ := cmd.Flags().GetBool("dummy")
+		app.Run(dummy)
 	},
 }
 
@@ -39,7 +43,8 @@ var authCmd = &cobra.Command{
 	Use:   "auth",
 	Short: "Run an auth server",
 	Run: func(cmd *cobra.Command, args []string) {
-		auth.Run()
+		dummy, _ := cmd.Flags().GetBool("dummy")
+		auth.Run(dummy)
 	},
 }
 
@@ -47,6 +52,7 @@ var mailCmd = &cobra.Command{
 	Use:   "mail",
 	Short: "Run an mail server",
 	Run: func(cmd *cobra.Command, args []string) {
-		mail.Run()
+		dummy, _ := cmd.Flags().GetBool("dummy")
+		mail.Run(dummy)
 	},
 }

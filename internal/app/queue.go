@@ -31,12 +31,16 @@ func newWriter() *kafka.Writer {
 	return w
 }
 
+type Queue interface {
+	push(ctx context.Context, mail Mail) error
+}
+
 type queue struct {
 	t trace.Tracer
 	w *kafka.Writer
 }
 
-func newQueue(t trace.Tracer, w *kafka.Writer) queue {
+func newQueue(t trace.Tracer, w *kafka.Writer) Queue {
 	return queue{t, w}
 }
 
@@ -58,4 +62,19 @@ func (q queue) push(ctx context.Context, mail Mail) error {
 		log.Error().Err(err).Msg("")
 	}
 	return err
+}
+
+type dummyQueue struct {
+	t trace.Tracer
+}
+
+func newDummyQueue(t trace.Tracer) Queue {
+	return dummyQueue{t}
+}
+
+func (q dummyQueue) push(ctx context.Context, mail Mail) error {
+	_, span := q.t.Start(ctx, util.FuncName())
+	defer span.End()
+
+	return nil
 }
