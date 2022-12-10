@@ -10,8 +10,3 @@ registries:
   ref: v3.102.0 # renovate: depName=aquaproj/aqua-registry
 packages:
 - name: golangci/golangci-lint@v1.50.1
-- name: kubernetes/kubectl@v1.25.4
-- name: helm/helm@v3.10.2
-- name: helmfile/helmfile@v0.148.1
-- name: kubernetes-sigs/kind@v0.17.0
-- name: open-policy-agent/conftest@v0.36.0
