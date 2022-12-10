@@ -13,11 +13,11 @@ import (
 
 type controller struct {
 	t trace.Tracer
-	q queue
-	m mailer
+	q Queue
+	m Mailer
 }
 
-func newController(t trace.Tracer, q queue, m mailer) controller {
+func newController(t trace.Tracer, q Queue, m Mailer) controller {
 	return controller{t, q, m}
 }
 

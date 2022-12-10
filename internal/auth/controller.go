@@ -15,10 +15,10 @@ const authCookieKey = "username"
 
 type controller struct {
 	t trace.Tracer
-	c cache
+	c Cache
 }
 
-func newController(t trace.Tracer, c cache) controller {
+func newController(t trace.Tracer, c Cache) controller {
 	return controller{t, c}
 }
 

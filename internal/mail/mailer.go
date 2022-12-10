@@ -11,6 +11,10 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
+type Mailer interface {
+	send(ctx context.Context, mail app.Mail) error
+}
+
 type mailer struct {
 	t    trace.Tracer
 	auth smtp.Auth

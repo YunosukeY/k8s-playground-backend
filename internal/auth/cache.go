@@ -26,6 +26,12 @@ func newRedis() *redis.Client {
 	return r
 }
 
+type Cache interface {
+	get(ctx context.Context, key string) (string, error)
+	set(ctx context.Context, key string, value string) error
+	delete(ctx context.Context, key string) error
+}
+
 type cache struct {
 	t trace.Tracer
 	r *redis.Client

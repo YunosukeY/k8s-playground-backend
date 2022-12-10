@@ -32,6 +32,10 @@ func newReader() *kafka.Reader {
 	return r
 }
 
+type Queue interface {
+	pop(ctx context.Context) (*app.Mail, error)
+}
+
 type queue struct {
 	t trace.Tracer
 	r *kafka.Reader

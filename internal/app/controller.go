@@ -11,11 +11,11 @@ import (
 
 type controller struct {
 	t trace.Tracer
-	r repository
-	q queue
+	r Repository
+	q Queue
 }
 
-func newController(t trace.Tracer, r repository, q queue) controller {
+func newController(t trace.Tracer, r Repository, q Queue) controller {
 	return controller{t, r, q}
 }
 

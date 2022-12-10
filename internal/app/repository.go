@@ -26,6 +26,11 @@ func newDB() *gorm.DB {
 	return db
 }
 
+type Repository interface {
+	findAllTodos(ctx context.Context) ([]TodoForResponse, error)
+	createTodo(ctx context.Context, todo TodoForPostRequest) (*TodoForResponse, error)
+}
+
 type repository struct {
 	t  trace.Tracer
 	db *gorm.DB

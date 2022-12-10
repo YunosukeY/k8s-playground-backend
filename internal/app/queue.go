@@ -31,6 +31,10 @@ func newWriter() *kafka.Writer {
 	return w
 }
 
+type Queue interface {
+	push(ctx context.Context, mail Mail) error
+}
+
 type queue struct {
 	t trace.Tracer
 	w *kafka.Writer
