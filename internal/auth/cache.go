@@ -37,7 +37,7 @@ type cache struct {
 	r *redis.Client
 }
 
-func newCache(t trace.Tracer, r *redis.Client) cache {
+func newCache(t trace.Tracer, r *redis.Client) Cache {
 	return cache{t, r}
 }
 

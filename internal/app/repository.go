@@ -36,7 +36,7 @@ type repository struct {
 	db *gorm.DB
 }
 
-func newRepository(t trace.Tracer, db *gorm.DB) repository {
+func newRepository(t trace.Tracer, db *gorm.DB) Repository {
 	return repository{t, db}
 }
 

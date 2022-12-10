@@ -41,7 +41,7 @@ type queue struct {
 	r *kafka.Reader
 }
 
-func newQueue(t trace.Tracer, r *kafka.Reader) queue {
+func newQueue(t trace.Tracer, r *kafka.Reader) Queue {
 	return queue{t, r}
 }
 

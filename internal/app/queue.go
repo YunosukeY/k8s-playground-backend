@@ -40,7 +40,7 @@ type queue struct {
 	w *kafka.Writer
 }
 
-func newQueue(t trace.Tracer, w *kafka.Writer) queue {
+func newQueue(t trace.Tracer, w *kafka.Writer) Queue {
 	return queue{t, w}
 }
 
