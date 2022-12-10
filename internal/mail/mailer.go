@@ -42,3 +42,18 @@ func (m mailer) send(ctx context.Context, mail app.Mail) error {
 	}
 	return err
 }
+
+type dummyMailer struct {
+	t trace.Tracer
+}
+
+func newDummyMailer(t trace.Tracer) Mailer {
+	return dummyMailer{t}
+}
+
+func (m dummyMailer) send(ctx context.Context, mail app.Mail) error {
+	_, span := m.t.Start(ctx, util.FuncName())
+	defer span.End()
+
+	return nil
+}

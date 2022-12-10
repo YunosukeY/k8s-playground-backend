@@ -62,3 +62,22 @@ func (q queue) pop(ctx context.Context) (*app.Mail, error) {
 	}
 	return &mail, nil
 }
+
+type dummyQueue struct {
+	t trace.Tracer
+}
+
+func newDummyQueue(t trace.Tracer) Queue {
+	return dummyQueue{t}
+}
+
+func (q dummyQueue) pop(ctx context.Context) (*app.Mail, error) {
+	_, span := q.t.Start(ctx, util.FuncName())
+	defer span.End()
+
+	sub := "title"
+	msg := "msg"
+	mail := app.Mail{To: "test@example.com", Sub: &sub, Msg: &msg}
+
+	return &mail, nil
+}

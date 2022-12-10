@@ -47,6 +47,6 @@ var mailCmd = &cobra.Command{
 	Use:   "mail",
 	Short: "Run an mail server",
 	Run: func(cmd *cobra.Command, args []string) {
-		mail.Run()
+		mail.Run(false)
 	},
 }

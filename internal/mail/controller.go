@@ -39,12 +39,18 @@ func (c controller) handle() {
 	}
 }
 
-func Run() {
+func Run(dummy bool) {
 	zerolog.SetGlobalLevel(zerolog.DebugLevel)
 	log.Logger = log.With().Caller().Logger()
 	gin.SetMode(gin.ReleaseMode)
 
-	c, shutdownProvider := initializeController("mail")
+	var c controller
+	var shutdownProvider func()
+	if !dummy {
+		c, shutdownProvider = initializeController("mail")
+	} else {
+		c, shutdownProvider = initializeDummyController("mail")
+	}
 	defer shutdownProvider()
 
 	go util.RunPodCommonHandler()

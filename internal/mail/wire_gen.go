@@ -22,3 +22,13 @@ func initializeController(service string) (controller, func()) {
 		cleanup()
 	}
 }
+
+func initializeDummyController(service string) (controller, func()) {
+	tracer, cleanup := util.NewTracer(service)
+	mailQueue := newDummyQueue(tracer)
+	mailMailer := newDummyMailer(tracer)
+	mailController := newController(tracer, mailQueue, mailMailer)
+	return mailController, func() {
+		cleanup()
+	}
+}
