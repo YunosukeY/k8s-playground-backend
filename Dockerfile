@@ -1,0 +1,10 @@
+FROM golang:1.19.3 AS builder
+WORKDIR /work
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+RUN CGO_ENABLED=0 go build cmd/app/main.go
+
+FROM gcr.io/distroless/static-debian11
+COPY --from=builder /work/main /usr/local/bin/
+USER nonroot

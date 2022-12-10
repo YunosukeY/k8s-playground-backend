@@ -1,0 +1,92 @@
+version: "3"
+services:
+  db:
+    platform: linux/x86_64
+    image: mysql:8.0.31
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: "Asia/Tokyo"
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - 3306:3306
+    volumes:
+      - ./k8s/app/mysql/init:/docker-entrypoint-initdb.d
+  cache:
+    image: redis:7.0.5-alpine3.16
+    container_name: cache
+    environment:
+      REDIS_ARGS: "--requirepass ${REDIS_PASSWORD}"
+    ports:
+      - 6379:6379
+  zookeeper:
+    image: bitnami/zookeeper:3.8.0
+    ports:
+      - 2181:2181
+    environment:
+      ALLOW_ANONYMOUS_LOGIN: yes
+  queue:
+    image: bitnami/kafka:3.3.1
+    container_name: queue
+    environment:
+      KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_BROKER_ID: 1
+      ALLOW_PLAINTEXT_LISTENER: yes
+    ports:
+      - 9092:9092
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025
+  app:
+    image: backend
+    build: backend
+    container_name: app
+    entrypoint: ["main", "app"]
+    ports:
+      - 8080:8080
+    environment:
+      MYSQL_DB_HOST: db
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DBARGS: charset=utf8&parseTime=True&loc=Local
+      KAFKA_HOST: queue
+    restart: on-failure:10
+  auth:
+    image: backend
+    build: backend
+    container_name: auth
+    entrypoint: ["main", "auth"]
+    ports:
+      - 8081:8080
+    environment:
+      REDIS_HOST: cache
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    restart: on-failure:10
+  mail:
+    image: backend
+    build: backend
+    container_name: mail
+    entrypoint: ["main", "mail"]
+    environment:
+      KAFKA_HOST: queue
+      MAIL_HOST: mailhog
+    restart: on-failure:10
+  jaeger:
+    image: jaegertracing/all-in-one:1.39
+    container_name: jaeger
+    ports:
+      - 16686:16686
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus:/etc/prometheus/
