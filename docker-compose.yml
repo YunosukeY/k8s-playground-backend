@@ -79,7 +79,7 @@ services:
       MAIL_HOST: mailhog
     restart: on-failure:10
   jaeger:
-    image: jaegertracing/all-in-one:1.39
+    image: jaegertracing/all-in-one:1.40
     container_name: jaeger
     ports:
       - 16686:16686
