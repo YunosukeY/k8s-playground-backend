@@ -1,9 +1,8 @@
-package mail
+package repository
 
 import (
 	"context"
 	"encoding/json"
-	"time"
 
 	"github.com/YunosukeY/kind-backend/internal/app/model"
 	"github.com/YunosukeY/kind-backend/internal/app/repository"
@@ -35,7 +34,7 @@ func NewReader() *kafka.Reader {
 }
 
 type Queue interface {
-	pop(ctx context.Context) (*model.Mail, error)
+	Pop(ctx context.Context) (*model.Mail, error)
 }
 
 type queue struct {
@@ -47,7 +46,7 @@ func NewQueue(t trace.Tracer, r *kafka.Reader) Queue {
 	return queue{t, r}
 }
 
-func (q queue) pop(ctx context.Context) (*model.Mail, error) {
+func (q queue) Pop(ctx context.Context) (*model.Mail, error) {
 	child, span := q.t.Start(ctx, util.FuncName())
 	defer span.End()
 
@@ -62,26 +61,5 @@ func (q queue) pop(ctx context.Context) (*model.Mail, error) {
 		log.Error().Err(err).Msg("")
 		return nil, err
 	}
-	return &mail, nil
-}
-
-type dummyQueue struct {
-	t trace.Tracer
-}
-
-func NewDummyQueue(t trace.Tracer) Queue {
-	return dummyQueue{t}
-}
-
-func (q dummyQueue) pop(ctx context.Context) (*model.Mail, error) {
-	_, span := q.t.Start(ctx, util.FuncName())
-	defer span.End()
-
-	time.Sleep(time.Second * 10)
-
-	sub := "title"
-	msg := "msg"
-	mail := model.Mail{To: "test@example.com", Sub: &sub, Msg: &msg}
-
 	return &mail, nil
 }

@@ -1,4 +1,4 @@
-package mail
+package repository
 
 import (
 	"context"
@@ -12,7 +12,7 @@ import (
 )
 
 type Mailer interface {
-	send(ctx context.Context, mail model.Mail) error
+	Send(ctx context.Context, mail model.Mail) error
 }
 
 type mailer struct {
@@ -29,7 +29,7 @@ func NewMailer(t trace.Tracer) Mailer {
 	return mailer{t, auth, addr}
 }
 
-func (m mailer) send(ctx context.Context, mail model.Mail) error {
+func (m mailer) Send(ctx context.Context, mail model.Mail) error {
 	_, span := m.t.Start(ctx, util.FuncName())
 	defer span.End()
 
@@ -41,19 +41,4 @@ func (m mailer) send(ctx context.Context, mail model.Mail) error {
 		log.Error().Err(err).Msg("")
 	}
 	return err
-}
-
-type dummyMailer struct {
-	t trace.Tracer
-}
-
-func NewDummyMailer(t trace.Tracer) Mailer {
-	return dummyMailer{t}
-}
-
-func (m dummyMailer) send(ctx context.Context, mail model.Mail) error {
-	_, span := m.t.Start(ctx, util.FuncName())
-	defer span.End()
-
-	return nil
 }
