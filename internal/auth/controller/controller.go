@@ -1,8 +1,10 @@
-package auth
+package controller
 
 import (
 	"net/http"
 
+	"github.com/YunosukeY/kind-backend/internal/auth/model"
+	"github.com/YunosukeY/kind-backend/internal/auth/repository"
 	"github.com/YunosukeY/kind-backend/internal/util"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -13,16 +15,21 @@ import (
 const authHeaderValue = "authorized"
 const authCookieKey = "username"
 
-type controller struct {
-	t trace.Tracer
-	c Cache
+type Controller interface {
+	GetSession(ctx *gin.Context)
+	PostSession(ctx *gin.Context)
 }
 
-func newController(t trace.Tracer, c Cache) controller {
+type controller struct {
+	t trace.Tracer
+	c repository.Cache
+}
+
+func NewController(t trace.Tracer, c repository.Cache) Controller {
 	return controller{t, c}
 }
 
-func (c controller) getSession(ctx *gin.Context) {
+func (c controller) GetSession(ctx *gin.Context) {
 	child, span := c.t.Start(ctx.Request.Context(), util.FuncName())
 	defer span.End()
 
@@ -34,7 +41,7 @@ func (c controller) getSession(ctx *gin.Context) {
 		return
 	}
 
-	_, err := c.c.get(child, username.(string))
+	_, err := c.c.Get(child, username.(string))
 	if err != nil {
 		ctx.AbortWithStatus(http.StatusUnauthorized)
 		return
@@ -46,11 +53,11 @@ func (c controller) getSession(ctx *gin.Context) {
 
 // TODO: 本当は正しいユーザか確認が必要
 // TODO: 本当はユーザ名とパスワードではなくUUIDとユーザ名をセットする必要
-func (c controller) postSession(ctx *gin.Context) {
+func (c controller) PostSession(ctx *gin.Context) {
 	child, span := c.t.Start(ctx.Request.Context(), util.FuncName())
 	defer span.End()
 
-	var u User
+	var u model.User
 	if err := ctx.ShouldBindJSON(&u); err != nil {
 		log.Error().Err(err).Msg("")
 		ctx.AbortWithStatus(http.StatusBadRequest)
@@ -58,7 +65,7 @@ func (c controller) postSession(ctx *gin.Context) {
 	}
 	log.Debug().Interface("user", u).Msg("")
 
-	if err := c.c.set(child, u.Name, u.Password); err != nil {
+	if err := c.c.Set(child, u.Name, u.Password); err != nil {
 		ctx.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
@@ -68,7 +75,7 @@ func (c controller) postSession(ctx *gin.Context) {
 	err := session.Save()
 	if err != nil {
 		log.Error().Err(err).Msg("")
-		c.c.delete(child, u.Name) // nolint
+		c.c.Delete(child, u.Name) // nolint
 		ctx.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}

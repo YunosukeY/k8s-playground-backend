@@ -1,29 +1,37 @@
-package app
+package controller
 
 import (
 	"net/http"
 
+	"github.com/YunosukeY/kind-backend/internal/app/model"
+	"github.com/YunosukeY/kind-backend/internal/app/repository"
 	"github.com/YunosukeY/kind-backend/internal/util"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 	"go.opentelemetry.io/otel/trace"
 )
 
-type controller struct {
-	t trace.Tracer
-	r Repository
-	q Queue
+type Controller interface {
+	GetTodos(ctx *gin.Context)
+	PostTodo(ctx *gin.Context)
+	PostMail(ctx *gin.Context)
 }
 
-func newController(t trace.Tracer, r Repository, q Queue) controller {
+type controller struct {
+	t trace.Tracer
+	r repository.Repository
+	q repository.Queue
+}
+
+func NewController(t trace.Tracer, r repository.Repository, q repository.Queue) Controller {
 	return controller{t, r, q}
 }
 
-func (c controller) getTodos(ctx *gin.Context) {
+func (c controller) GetTodos(ctx *gin.Context) {
 	child, span := c.t.Start(ctx.Request.Context(), util.FuncName())
 	defer span.End()
 
-	todos, err := c.r.findAllTodos(child)
+	todos, err := c.r.FindAllTodos(child)
 	if err != nil {
 		ctx.AbortWithStatus(http.StatusInternalServerError)
 		return
@@ -32,18 +40,18 @@ func (c controller) getTodos(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, todos)
 }
 
-func (c controller) postTodo(ctx *gin.Context) {
+func (c controller) PostTodo(ctx *gin.Context) {
 	child, span := c.t.Start(ctx.Request.Context(), util.FuncName())
 	defer span.End()
 
-	var todo TodoForPostRequest
+	var todo model.TodoForPostRequest
 	if err := ctx.ShouldBindJSON(&todo); err != nil {
 		log.Error().Err(err).Msg("")
 		ctx.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
 
-	todoWithID, err := c.r.createTodo(child, todo)
+	todoWithID, err := c.r.CreateTodo(child, todo)
 	if err != nil {
 		ctx.AbortWithStatus(http.StatusInternalServerError)
 		return
@@ -53,11 +61,11 @@ func (c controller) postTodo(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, todoWithID)
 }
 
-func (c controller) postMail(ctx *gin.Context) {
+func (c controller) PostMail(ctx *gin.Context) {
 	child, span := c.t.Start(ctx.Request.Context(), util.FuncName())
 	defer span.End()
 
-	var mail Mail
+	var mail model.Mail
 	if err := ctx.ShouldBindJSON(&mail); err != nil {
 		log.Error().Err(err).Msg("")
 		ctx.AbortWithStatus(http.StatusBadRequest)
@@ -65,7 +73,7 @@ func (c controller) postMail(ctx *gin.Context) {
 	}
 	log.Debug().Interface("mail", mail).Msg("")
 
-	if err := c.q.push(child, mail); err != nil {
+	if err := c.q.Push(child, mail); err != nil {
 		ctx.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}

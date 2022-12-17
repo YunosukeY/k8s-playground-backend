@@ -7,6 +7,7 @@
 package mail
 
 import (
+	"github.com/YunosukeY/kind-backend/internal/mail/repository"
 	"github.com/YunosukeY/kind-backend/internal/util"
 )
 
@@ -14,10 +15,10 @@ import (
 
 func initializeController(service string) (controller, func()) {
 	tracer, cleanup := util.NewTracer(service)
-	reader := newReader()
-	mailQueue := newQueue(tracer, reader)
-	mailMailer := newMailer(tracer)
-	mailController := newController(tracer, mailQueue, mailMailer)
+	reader := repository.NewReader()
+	queue := repository.NewQueue(tracer, reader)
+	mailer := repository.NewMailer(tracer)
+	mailController := NewController(tracer, queue, mailer)
 	return mailController, func() {
 		cleanup()
 	}
@@ -25,9 +26,9 @@ func initializeController(service string) (controller, func()) {
 
 func initializeDummyController(service string) (controller, func()) {
 	tracer, cleanup := util.NewTracer(service)
-	mailQueue := newDummyQueue(tracer)
-	mailMailer := newDummyMailer(tracer)
-	mailController := newController(tracer, mailQueue, mailMailer)
+	queue := repository.NewDummyQueue(tracer)
+	mailer := repository.NewDummyMailer(tracer)
+	mailController := NewController(tracer, queue, mailer)
 	return mailController, func() {
 		cleanup()
 	}

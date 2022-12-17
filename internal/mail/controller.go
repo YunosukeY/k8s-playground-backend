@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/YunosukeY/kind-backend/internal/mail/repository"
 	"github.com/YunosukeY/kind-backend/internal/util"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
@@ -13,11 +14,11 @@ import (
 
 type controller struct {
 	t trace.Tracer
-	q Queue
-	m Mailer
+	q repository.Queue
+	m repository.Mailer
 }
 
-func newController(t trace.Tracer, q Queue, m Mailer) controller {
+func NewController(t trace.Tracer, q repository.Queue, m repository.Mailer) controller {
 	return controller{t, q, m}
 }
 
@@ -26,12 +27,12 @@ func (c controller) handle() {
 	for {
 		child, span := c.t.Start(context.Background(), util.FuncName())
 
-		m, err := c.q.pop(child)
+		m, err := c.q.Pop(child)
 		if err != nil {
 			panic(err)
 		}
 		log.Debug().Interface("mail", m).Msg("")
-		if err := c.m.send(child, *m); err != nil {
+		if err := c.m.Send(child, *m); err != nil {
 			panic(err)
 		}
 
