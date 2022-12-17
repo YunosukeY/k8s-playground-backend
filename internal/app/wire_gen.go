@@ -14,11 +14,11 @@ import (
 
 func initializeRouter(service string) (router, func()) {
 	tracer, cleanup := util.NewTracer(service)
-	db := newDB()
-	appRepository := newRepository(tracer, db)
-	writer := newWriter()
-	appQueue := newQueue(tracer, writer)
-	appController := newController(tracer, appRepository, appQueue)
+	db := NewDB()
+	appRepository := NewRepository(tracer, db)
+	writer := NewWriter()
+	appQueue := NewQueue(tracer, writer)
+	appController := NewController(tracer, appRepository, appQueue)
 	appRouter := newRouter(appController)
 	return appRouter, func() {
 		cleanup()
@@ -27,9 +27,9 @@ func initializeRouter(service string) (router, func()) {
 
 func initializeDummyRouter(service string) (router, func()) {
 	tracer, cleanup := util.NewTracer(service)
-	appRepository := newDummyRepository(tracer)
-	appQueue := newDummyQueue(tracer)
-	appController := newController(tracer, appRepository, appQueue)
+	appRepository := NewDummyRepository(tracer)
+	appQueue := NewDummyQueue(tracer)
+	appController := NewController(tracer, appRepository, appQueue)
 	appRouter := newRouter(appController)
 	return appRouter, func() {
 		cleanup()

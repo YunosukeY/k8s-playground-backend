@@ -9,11 +9,11 @@ import (
 )
 
 func initializeRouter(service string) (router, func()) {
-	wire.Build(newRouter, newController, util.NewTracer, newRepository, newDB, newQueue, newWriter)
+	wire.Build(newRouter, NewController, util.NewTracer, NewRepository, NewDB, NewQueue, NewWriter)
 	return router{}, func() {}
 }
 
 func initializeDummyRouter(service string) (router, func()) {
-	wire.Build(newRouter, newController, util.NewTracer, newDummyRepository, newDummyQueue)
+	wire.Build(newRouter, NewController, util.NewTracer, NewDummyRepository, NewDummyQueue)
 	return router{}, func() {}
 }

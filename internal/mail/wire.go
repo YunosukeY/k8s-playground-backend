@@ -9,11 +9,11 @@ import (
 )
 
 func initializeController(service string) (controller, func()) {
-	wire.Build(newController, util.NewTracer, newQueue, newReader, newMailer)
+	wire.Build(NewController, util.NewTracer, NewQueue, NewReader, NewMailer)
 	return controller{}, func() {}
 }
 
 func initializeDummyController(service string) (controller, func()) {
-	wire.Build(newController, util.NewTracer, newDummyQueue, newDummyMailer)
+	wire.Build(NewController, util.NewTracer, NewDummyQueue, NewDummyMailer)
 	return controller{}, func() {}
 }

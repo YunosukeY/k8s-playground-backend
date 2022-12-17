@@ -12,7 +12,7 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
-func newReader() *kafka.Reader {
+func NewReader() *kafka.Reader {
 	addr := util.GetKafkaAddress()
 
 	// check connection
@@ -42,7 +42,7 @@ type queue struct {
 	r *kafka.Reader
 }
 
-func newQueue(t trace.Tracer, r *kafka.Reader) Queue {
+func NewQueue(t trace.Tracer, r *kafka.Reader) Queue {
 	return queue{t, r}
 }
 
@@ -68,7 +68,7 @@ type dummyQueue struct {
 	t trace.Tracer
 }
 
-func newDummyQueue(t trace.Tracer) Queue {
+func NewDummyQueue(t trace.Tracer) Queue {
 	return dummyQueue{t}
 }
 

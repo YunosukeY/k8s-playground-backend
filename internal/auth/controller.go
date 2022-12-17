@@ -13,12 +13,17 @@ import (
 const authHeaderValue = "authorized"
 const authCookieKey = "username"
 
+type Controller interface {
+	getSession(ctx *gin.Context)
+	postSession(ctx *gin.Context)
+}
+
 type controller struct {
 	t trace.Tracer
 	c Cache
 }
 
-func newController(t trace.Tracer, c Cache) controller {
+func NewController(t trace.Tracer, c Cache) Controller {
 	return controller{t, c}
 }
 

@@ -9,13 +9,19 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
+type Controller interface {
+	getTodos(ctx *gin.Context)
+	postTodo(ctx *gin.Context)
+	postMail(ctx *gin.Context)
+}
+
 type controller struct {
 	t trace.Tracer
 	r Repository
 	q Queue
 }
 
-func newController(t trace.Tracer, r Repository, q Queue) controller {
+func NewController(t trace.Tracer, r Repository, q Queue) Controller {
 	return controller{t, r, q}
 }
 

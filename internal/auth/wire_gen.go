@@ -14,9 +14,9 @@ import (
 
 func initializeRouter(service string) (router, func()) {
 	tracer, cleanup := util.NewTracer(service)
-	client := newRedis()
-	authCache := newCache(tracer, client)
-	authController := newController(tracer, authCache)
+	client := NewRedis()
+	authCache := NewCache(tracer, client)
+	authController := NewController(tracer, authCache)
 	authRouter := newRouter(authController)
 	return authRouter, func() {
 		cleanup()
@@ -25,8 +25,8 @@ func initializeRouter(service string) (router, func()) {
 
 func initializeDummyRouter(service string) (router, func()) {
 	tracer, cleanup := util.NewTracer(service)
-	authCache := newDummyCache(tracer)
-	authController := newController(tracer, authCache)
+	authCache := NewDummyCache(tracer)
+	authController := NewController(tracer, authCache)
 	authRouter := newRouter(authController)
 	return authRouter, func() {
 		cleanup()

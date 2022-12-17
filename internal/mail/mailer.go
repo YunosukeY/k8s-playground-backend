@@ -21,7 +21,7 @@ type mailer struct {
 	addr string
 }
 
-func newMailer(t trace.Tracer) Mailer {
+func NewMailer(t trace.Tracer) Mailer {
 	username := util.GetParamString("MAIL_USER", "user")
 	password := util.GetParamString("MAIL_PASS", "pass")
 	auth := smtp.CRAMMD5Auth(username, password)
@@ -47,7 +47,7 @@ type dummyMailer struct {
 	t trace.Tracer
 }
 
-func newDummyMailer(t trace.Tracer) Mailer {
+func NewDummyMailer(t trace.Tracer) Mailer {
 	return dummyMailer{t}
 }
 

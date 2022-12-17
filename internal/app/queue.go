@@ -12,7 +12,7 @@ import (
 
 const Topic = "mail"
 
-func newWriter() *kafka.Writer {
+func NewWriter() *kafka.Writer {
 	addr := util.GetKafkaAddress()
 
 	// check connection
@@ -40,7 +40,7 @@ type queue struct {
 	w *kafka.Writer
 }
 
-func newQueue(t trace.Tracer, w *kafka.Writer) Queue {
+func NewQueue(t trace.Tracer, w *kafka.Writer) Queue {
 	return queue{t, w}
 }
 
@@ -68,7 +68,7 @@ type dummyQueue struct {
 	t trace.Tracer
 }
 
-func newDummyQueue(t trace.Tracer) Queue {
+func NewDummyQueue(t trace.Tracer) Queue {
 	return dummyQueue{t}
 }
 

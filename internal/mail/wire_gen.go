@@ -14,10 +14,10 @@ import (
 
 func initializeController(service string) (controller, func()) {
 	tracer, cleanup := util.NewTracer(service)
-	reader := newReader()
-	mailQueue := newQueue(tracer, reader)
-	mailMailer := newMailer(tracer)
-	mailController := newController(tracer, mailQueue, mailMailer)
+	reader := NewReader()
+	mailQueue := NewQueue(tracer, reader)
+	mailMailer := NewMailer(tracer)
+	mailController := NewController(tracer, mailQueue, mailMailer)
 	return mailController, func() {
 		cleanup()
 	}
@@ -25,9 +25,9 @@ func initializeController(service string) (controller, func()) {
 
 func initializeDummyController(service string) (controller, func()) {
 	tracer, cleanup := util.NewTracer(service)
-	mailQueue := newDummyQueue(tracer)
-	mailMailer := newDummyMailer(tracer)
-	mailController := newController(tracer, mailQueue, mailMailer)
+	mailQueue := NewDummyQueue(tracer)
+	mailMailer := NewDummyMailer(tracer)
+	mailController := NewController(tracer, mailQueue, mailMailer)
 	return mailController, func() {
 		cleanup()
 	}

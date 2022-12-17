@@ -11,7 +11,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func newDB() *gorm.DB {
+func NewDB() *gorm.DB {
 	dsn := util.GetConnectionString()
 
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
@@ -36,7 +36,7 @@ type repository struct {
 	db *gorm.DB
 }
 
-func newRepository(t trace.Tracer, db *gorm.DB) Repository {
+func NewRepository(t trace.Tracer, db *gorm.DB) Repository {
 	return repository{t, db}
 }
 
@@ -72,7 +72,7 @@ type dummyRepository struct {
 	todos     []TodoForResponse
 }
 
-func newDummyRepository(t trace.Tracer) Repository {
+func NewDummyRepository(t trace.Tracer) Repository {
 	return &dummyRepository{t: t, totalSize: 0, todos: []TodoForResponse{}}
 }
 

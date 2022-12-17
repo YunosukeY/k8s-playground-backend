@@ -12,10 +12,10 @@ import (
 )
 
 type router struct {
-	c controller
+	c Controller
 }
 
-func newRouter(c controller) router {
+func newRouter(c Controller) router {
 	return router{c}
 }
 

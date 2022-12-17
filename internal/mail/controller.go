@@ -17,7 +17,7 @@ type controller struct {
 	m Mailer
 }
 
-func newController(t trace.Tracer, q Queue, m Mailer) controller {
+func NewController(t trace.Tracer, q Queue, m Mailer) controller {
 	return controller{t, q, m}
 }
 

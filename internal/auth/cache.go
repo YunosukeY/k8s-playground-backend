@@ -11,7 +11,7 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
-func newRedis() *redis.Client {
+func NewRedis() *redis.Client {
 	op := util.GetRedisOptions()
 	r := redis.NewClient(op)
 	if err := redisotel.InstrumentTracing(r); err != nil {
@@ -38,7 +38,7 @@ type cache struct {
 	r *redis.Client
 }
 
-func newCache(t trace.Tracer, r *redis.Client) Cache {
+func NewCache(t trace.Tracer, r *redis.Client) Cache {
 	return cache{t, r}
 }
 
@@ -71,7 +71,7 @@ type dummyCache struct {
 	m map[string]string
 }
 
-func newDummyCache(t trace.Tracer) Cache {
+func NewDummyCache(t trace.Tracer) Cache {
 	m := map[string]string{}
 	return dummyCache{t, m}
 }
