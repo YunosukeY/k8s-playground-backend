@@ -7,6 +7,8 @@
 package auth
 
 import (
+	"github.com/YunosukeY/kind-backend/internal/auth/controller"
+	"github.com/YunosukeY/kind-backend/internal/auth/repository"
 	"github.com/YunosukeY/kind-backend/internal/util"
 )
 
@@ -14,10 +16,10 @@ import (
 
 func initializeRouter(service string) (router, func()) {
 	tracer, cleanup := util.NewTracer(service)
-	client := NewRedis()
-	authCache := NewCache(tracer, client)
-	authController := NewController(tracer, authCache)
-	authRouter := newRouter(authController)
+	client := repository.NewRedis()
+	cache := repository.NewCache(tracer, client)
+	controllerController := controller.NewController(tracer, cache)
+	authRouter := newRouter(controllerController)
 	return authRouter, func() {
 		cleanup()
 	}
@@ -25,9 +27,9 @@ func initializeRouter(service string) (router, func()) {
 
 func initializeDummyRouter(service string) (router, func()) {
 	tracer, cleanup := util.NewTracer(service)
-	authCache := NewDummyCache(tracer)
-	authController := NewController(tracer, authCache)
-	authRouter := newRouter(authController)
+	cache := repository.NewDummyCache(tracer)
+	controllerController := controller.NewController(tracer, cache)
+	authRouter := newRouter(controllerController)
 	return authRouter, func() {
 		cleanup()
 	}

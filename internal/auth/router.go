@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"github.com/YunosukeY/kind-backend/internal/auth/controller"
 	"github.com/YunosukeY/kind-backend/internal/util"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
@@ -12,10 +13,10 @@ import (
 )
 
 type router struct {
-	c Controller
+	c controller.Controller
 }
 
-func newRouter(c Controller) router {
+func newRouter(c controller.Controller) router {
 	return router{c}
 }
 
@@ -31,8 +32,8 @@ func (r router) handler() *gin.Engine {
 
 	v1 := router.Group("/api/v1")
 	{
-		v1.GET("sessions", r.c.getSession)
-		v1.POST("sessions", r.c.postSession)
+		v1.GET("sessions", r.c.GetSession)
+		v1.POST("sessions", r.c.PostSession)
 
 	}
 
