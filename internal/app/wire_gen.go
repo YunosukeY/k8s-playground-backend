@@ -7,6 +7,8 @@
 package app
 
 import (
+	"github.com/YunosukeY/kind-backend/internal/app/controller"
+	"github.com/YunosukeY/kind-backend/internal/app/repository"
 	"github.com/YunosukeY/kind-backend/internal/util"
 )
 
@@ -14,12 +16,12 @@ import (
 
 func initializeRouter(service string) (router, func()) {
 	tracer, cleanup := util.NewTracer(service)
-	db := NewDB()
-	appRepository := NewRepository(tracer, db)
-	writer := NewWriter()
-	appQueue := NewQueue(tracer, writer)
-	appController := NewController(tracer, appRepository, appQueue)
-	appRouter := newRouter(appController)
+	db := repository.NewDB()
+	repositoryRepository := repository.NewRepository(tracer, db)
+	writer := repository.NewWriter()
+	queue := repository.NewQueue(tracer, writer)
+	controllerController := controller.NewController(tracer, repositoryRepository, queue)
+	appRouter := newRouter(controllerController)
 	return appRouter, func() {
 		cleanup()
 	}
@@ -27,10 +29,10 @@ func initializeRouter(service string) (router, func()) {
 
 func initializeDummyRouter(service string) (router, func()) {
 	tracer, cleanup := util.NewTracer(service)
-	appRepository := NewDummyRepository(tracer)
-	appQueue := NewDummyQueue(tracer)
-	appController := NewController(tracer, appRepository, appQueue)
-	appRouter := newRouter(appController)
+	repositoryRepository := repository.NewDummyRepository(tracer)
+	queue := repository.NewDummyQueue(tracer)
+	controllerController := controller.NewController(tracer, repositoryRepository, queue)
+	appRouter := newRouter(controllerController)
 	return appRouter, func() {
 		cleanup()
 	}

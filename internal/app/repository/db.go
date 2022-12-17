@@ -1,8 +1,9 @@
-package app
+package repository
 
 import (
 	"context"
 
+	"github.com/YunosukeY/kind-backend/internal/app/model"
 	"github.com/YunosukeY/kind-backend/internal/util"
 	"github.com/rs/zerolog/log"
 	"github.com/uptrace/opentelemetry-go-extra/otelgorm"
@@ -27,8 +28,8 @@ func NewDB() *gorm.DB {
 }
 
 type Repository interface {
-	findAllTodos(ctx context.Context) ([]TodoForResponse, error)
-	createTodo(ctx context.Context, todo TodoForPostRequest) (*TodoForResponse, error)
+	FindAllTodos(ctx context.Context) ([]model.TodoForResponse, error)
+	CreateTodo(ctx context.Context, todo model.TodoForPostRequest) (*model.TodoForResponse, error)
 }
 
 type repository struct {
@@ -40,11 +41,11 @@ func NewRepository(t trace.Tracer, db *gorm.DB) Repository {
 	return repository{t, db}
 }
 
-func (r repository) findAllTodos(ctx context.Context) ([]TodoForResponse, error) {
+func (r repository) FindAllTodos(ctx context.Context) ([]model.TodoForResponse, error) {
 	child, span := r.t.Start(ctx, util.FuncName())
 	defer span.End()
 
-	var todos []TodoForResponse
+	var todos []model.TodoForResponse
 	res := r.db.WithContext(child).Table("todos").Find(&todos)
 	if res.Error != nil {
 		log.Error().Err(res.Error).Msg("")
@@ -53,43 +54,15 @@ func (r repository) findAllTodos(ctx context.Context) ([]TodoForResponse, error)
 	return todos, nil
 }
 
-func (r repository) createTodo(ctx context.Context, todo TodoForPostRequest) (*TodoForResponse, error) {
+func (r repository) CreateTodo(ctx context.Context, todo model.TodoForPostRequest) (*model.TodoForResponse, error) {
 	child, span := r.t.Start(ctx, util.FuncName())
 	defer span.End()
 
-	todoWithID := &TodoForResponse{Content: todo.Content}
+	todoWithID := &model.TodoForResponse{Content: todo.Content}
 	res := r.db.WithContext(child).Table("todos").Create(todoWithID)
 	if res.Error != nil {
 		log.Error().Err(res.Error).Msg("")
 		return nil, res.Error
 	}
 	return todoWithID, nil
-}
-
-type dummyRepository struct {
-	t         trace.Tracer
-	totalSize int
-	todos     []TodoForResponse
-}
-
-func NewDummyRepository(t trace.Tracer) Repository {
-	return &dummyRepository{t: t, totalSize: 0, todos: []TodoForResponse{}}
-}
-
-func (r *dummyRepository) findAllTodos(ctx context.Context) ([]TodoForResponse, error) {
-	_, span := r.t.Start(ctx, util.FuncName())
-	defer span.End()
-
-	return r.todos, nil
-}
-
-func (r *dummyRepository) createTodo(ctx context.Context, todo TodoForPostRequest) (*TodoForResponse, error) {
-	_, span := r.t.Start(ctx, util.FuncName())
-	defer span.End()
-
-	todoWithID := TodoForResponse{ID: r.totalSize, Content: todo.Content}
-	r.todos = append(r.todos, todoWithID)
-	r.totalSize++
-
-	return &todoWithID, nil
 }

@@ -5,14 +5,14 @@ import (
 	"fmt"
 	"net/smtp"
 
-	"github.com/YunosukeY/kind-backend/internal/app"
+	"github.com/YunosukeY/kind-backend/internal/app/model"
 	"github.com/YunosukeY/kind-backend/internal/util"
 	"github.com/rs/zerolog/log"
 	"go.opentelemetry.io/otel/trace"
 )
 
 type Mailer interface {
-	send(ctx context.Context, mail app.Mail) error
+	send(ctx context.Context, mail model.Mail) error
 }
 
 type mailer struct {
@@ -29,7 +29,7 @@ func NewMailer(t trace.Tracer) Mailer {
 	return mailer{t, auth, addr}
 }
 
-func (m mailer) send(ctx context.Context, mail app.Mail) error {
+func (m mailer) send(ctx context.Context, mail model.Mail) error {
 	_, span := m.t.Start(ctx, util.FuncName())
 	defer span.End()
 
@@ -51,7 +51,7 @@ func NewDummyMailer(t trace.Tracer) Mailer {
 	return dummyMailer{t}
 }
 
-func (m dummyMailer) send(ctx context.Context, mail app.Mail) error {
+func (m dummyMailer) send(ctx context.Context, mail model.Mail) error {
 	_, span := m.t.Start(ctx, util.FuncName())
 	defer span.End()
 

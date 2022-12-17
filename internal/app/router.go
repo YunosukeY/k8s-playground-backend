@@ -3,6 +3,7 @@ package app
 import (
 	"net/http"
 
+	"github.com/YunosukeY/kind-backend/internal/app/controller"
 	"github.com/YunosukeY/kind-backend/internal/util"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
@@ -11,10 +12,10 @@ import (
 )
 
 type router struct {
-	c Controller
+	c controller.Controller
 }
 
-func newRouter(c Controller) router {
+func newRouter(c controller.Controller) router {
 	return router{c}
 }
 
@@ -38,14 +39,14 @@ func (r router) handler() *gin.Engine {
 		private := v1.Group("/")
 		{
 			private.Use(authMiddleware())
-			private.GET("todos", r.c.getTodos)
-			private.POST("todos", r.c.postTodo)
-			private.POST("mails", r.c.postMail)
+			private.GET("todos", r.c.GetTodos)
+			private.POST("todos", r.c.PostTodo)
+			private.POST("mails", r.c.PostMail)
 		}
 
 		public := v1.Group("/public")
 		{
-			public.GET("todos", r.c.getTodos)
+			public.GET("todos", r.c.GetTodos)
 		}
 	}
 

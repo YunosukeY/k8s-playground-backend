@@ -1,9 +1,10 @@
-package app
+package repository
 
 import (
 	"context"
 	"encoding/json"
 
+	"github.com/YunosukeY/kind-backend/internal/app/model"
 	"github.com/YunosukeY/kind-backend/internal/util"
 	"github.com/rs/zerolog/log"
 	"github.com/segmentio/kafka-go"
@@ -32,7 +33,7 @@ func NewWriter() *kafka.Writer {
 }
 
 type Queue interface {
-	push(ctx context.Context, mail Mail) error
+	Push(ctx context.Context, mail model.Mail) error
 }
 
 type queue struct {
@@ -44,7 +45,7 @@ func NewQueue(t trace.Tracer, w *kafka.Writer) Queue {
 	return queue{t, w}
 }
 
-func (q queue) push(ctx context.Context, mail Mail) error {
+func (q queue) Push(ctx context.Context, mail model.Mail) error {
 	child, span := q.t.Start(ctx, util.FuncName())
 	defer span.End()
 
@@ -62,19 +63,4 @@ func (q queue) push(ctx context.Context, mail Mail) error {
 		log.Error().Err(err).Msg("")
 	}
 	return err
-}
-
-type dummyQueue struct {
-	t trace.Tracer
-}
-
-func NewDummyQueue(t trace.Tracer) Queue {
-	return dummyQueue{t}
-}
-
-func (q dummyQueue) push(ctx context.Context, mail Mail) error {
-	_, span := q.t.Start(ctx, util.FuncName())
-	defer span.End()
-
-	return nil
 }
