@@ -6,9 +6,10 @@
 ## Preparation for Kind Sample
 
 0. Register to DockerHub if you have never used.
-1. Fork this repository.
-2. Add your DockerHub username and password as `DOCKERHUB_USERNAME` and `DOCKERHUB_PASSWORD` to the repository secret.
-3. Run `build backend` action.
+1. Create a repository "kind-backend" at DockerHub
+2. Fork this repository.
+3. Add your DockerHub username and password as `DOCKERHUB_USERNAME` and `DOCKERHUB_PASSWORD` to the repository secret.
+4. Run `build backend` action.
 
 ## Local Usage
 
