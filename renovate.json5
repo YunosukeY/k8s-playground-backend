@@ -14,7 +14,7 @@
         "aquaproj/aqua",
         "aquaproj/aqua-installer",
       ],
-      enabled: true,
+      automerge: true,
     },
   ],
 
