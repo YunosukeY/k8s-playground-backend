@@ -75,6 +75,7 @@ services:
     entrypoint: ["main", "app"]
     ports:
       - 8080:8080
+      - 8888:8888
     environment:
       MYSQL_DB_HOST: db
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -96,6 +97,7 @@ services:
     entrypoint: ["main", "auth"]
     ports:
       - 8081:8080
+      - 8889:8888
     environment:
       REDIS_HOST: cache
       REDIS_PASSWORD: ${REDIS_PASSWORD}
@@ -108,6 +110,8 @@ services:
     build: .
     container_name: mail
     entrypoint: ["main", "mail"]
+    ports:
+      - 8890:8888
     environment:
       KAFKA_HOST: queue
       MAIL_HOST: mailhog

@@ -24,6 +24,15 @@ up () {
 }
 
 run () {
+  for i in {0..9}
+  do
+    curl -f localhost:8888/healthz && \
+    curl -f localhost:8889/healthz && \
+    curl -f localhost:8890/healthz && break
+    echo "waiting..."
+    sleep 1
+  done
+
   go test "${repo_dir}/cmd/e2e/main_test.go"
 }
 
