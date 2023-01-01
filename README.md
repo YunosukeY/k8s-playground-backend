@@ -3,6 +3,7 @@
 [![build backend](https://github.com/YunosukeY/k8s-playground-backend/actions/workflows/build-backend.yaml/badge.svg?branch=master&event=push)](https://github.com/YunosukeY/k8s-playground-backend/actions/workflows/build-backend.yaml)
 [![golangci-lint](https://github.com/YunosukeY/k8s-playground-backend/actions/workflows/golangci-lint.yml/badge.svg?branch=master&event=push)](https://github.com/YunosukeY/k8s-playground-backend/actions/workflows/golangci-lint.yml)
 [![e2e](https://github.com/YunosukeY/k8s-playground-backend/actions/workflows/e2e.yaml/badge.svg?branch=master&event=push)](https://github.com/YunosukeY/k8s-playground-backend/actions/workflows/e2e.yaml)
+[![Renovate](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com)
 
 <!--
 ## Local Usage
