@@ -23,10 +23,15 @@ up () {
   docker compose up -d db cache zookeeper queue mailhog app auth mail
 }
 
+run () {
+  go test "${repo_dir}/cmd/e2e/main_test.go"
+}
+
 if [ "$command" == "up" ]; then
   up
 elif [ "$command" == "run" ]; then
   up
+  run
 elif [ "$command" == "down" ]; then
   docker compose down
 else
