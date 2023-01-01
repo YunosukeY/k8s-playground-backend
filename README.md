@@ -25,17 +25,10 @@ REDIS_PASSWORD={PASSWORD}
 EOF
 ```
 
-2. Start middleware.
+2. Start apps.
 
 ```bash
-docker compose up db cache zookeeper mailhog
-docker compose up queue
-```
-
-3. Start apps.
-
-```bash
-docker compose up app auth mail
+./e2e.sh up
 ```
 
 ## Dependency Libraries
