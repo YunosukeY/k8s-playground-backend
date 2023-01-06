@@ -23,4 +23,4 @@ jobs:
           MYSQL_PASSWORD=password1
           REDIS_PASSWORD=redis-stack
           EOF
-          ./e2e.sh run
+          ./script/e2e.sh run

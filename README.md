@@ -56,7 +56,7 @@ EOF
 2. Start apps.
 
 ```bash
-./e2e.sh up
+./script/e2e.sh up
 ```
 
 ## Preparation for Kind Sample
