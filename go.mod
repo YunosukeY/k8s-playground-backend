@@ -55,6 +55,7 @@ require (
 	github.com/go-redis/redis/extra/redisotel/v9 v9.0.0-rc.2
 	github.com/go-redis/redis/v9 v9.0.0-rc.2
 	github.com/goccy/go-json v0.9.11 // indirect
+	github.com/golang/mock v1.6.0
 	github.com/google/wire v0.5.0
 	github.com/joho/godotenv v1.4.0
 	github.com/json-iterator/go v1.1.12 // indirect
