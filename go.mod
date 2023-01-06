@@ -44,6 +44,7 @@ require (
 )
 
 require (
+	github.com/DATA-DOG/go-txdb v0.1.5
 	github.com/gin-contrib/cors v1.4.0
 	github.com/gin-contrib/logger v0.2.5
 	github.com/gin-contrib/sessions v0.0.5
@@ -55,6 +56,7 @@ require (
 	github.com/go-redis/redis/v9 v9.0.0-rc.2
 	github.com/goccy/go-json v0.9.11 // indirect
 	github.com/google/wire v0.5.0
+	github.com/joho/godotenv v1.4.0
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/mattn/go-isatty v0.0.16 // indirect
