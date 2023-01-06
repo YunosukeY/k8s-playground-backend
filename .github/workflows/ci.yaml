@@ -1,0 +1,27 @@
+name: ci
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  ci:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+        with:
+          go-version: '1.19.x'
+      - run: |
+          cat <<EOF > .env
+          MYSQL_ROOT_PASSWORD=root
+          MYSQL_DATABASE=sample_db
+          MYSQL_USER=user1
+          MYSQL_PASSWORD=password1
+          REDIS_PASSWORD=redis-stack
+          EOF
+          docker compose up -d db
+          ./script/ci.sh run
