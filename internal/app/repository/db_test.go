@@ -6,15 +6,20 @@ import (
 
 	"github.com/YunosukeY/kind-backend/internal/app/model"
 	"github.com/YunosukeY/kind-backend/internal/util"
+	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
 )
+
+func TestMain(m *testing.M) {
+	zerolog.SetGlobalLevel(zerolog.Disabled)
+
+	m.Run()
+}
 
 func TestFindAllTodos(t *testing.T) {
 	db, deferer := util.NewTestDB("find_all_todos")
 	defer deferer()
-	tracer, shutdownProvider := util.NewTracer("app")
-	defer shutdownProvider()
-	repo := NewRepository(tracer, db)
+	repo := NewRepository(util.NewTestTracer(), db)
 
 	expected := []model.TodoForResponse{{ID: 1, Content: "test"}}
 	actual, _ := repo.FindAllTodos(context.Background())
@@ -24,9 +29,7 @@ func TestFindAllTodos(t *testing.T) {
 func TestCreateTodo(t *testing.T) {
 	db, deferer := util.NewTestDB("create_todo")
 	defer deferer()
-	tracer, shutdownProvider := util.NewTracer("app")
-	defer shutdownProvider()
-	repo := NewRepository(tracer, db)
+	repo := NewRepository(util.NewTestTracer(), db)
 
 	expected := &model.TodoForResponse{ID: 2, Content: "todo2"}
 	input := model.TodoForPostRequest{Content: "todo2"}

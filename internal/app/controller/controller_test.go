@@ -13,8 +13,15 @@ import (
 	"github.com/YunosukeY/kind-backend/internal/util"
 	"github.com/gin-gonic/gin"
 	"github.com/golang/mock/gomock"
+	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
 )
+
+func TestMain(m *testing.M) {
+	zerolog.SetGlobalLevel(zerolog.Disabled)
+
+	m.Run()
+}
 
 func TestGetTodos(t *testing.T) {
 	cases := []struct {
@@ -54,16 +61,12 @@ func TestGetTodos(t *testing.T) {
 			mockRepo := mock_repository.NewMockRepository(ctrl)
 			mockRepo.EXPECT().FindAllTodos(gomock.Any()).Return(tt.mockRet, tt.mockErr)
 			mockQueue := mock_repository.NewMockQueue(ctrl)
-
-			tracer, shutdownProvider := util.NewTracer("app")
-			defer shutdownProvider()
-			con := NewController(tracer, mockRepo, mockQueue)
+			con := NewController(util.NewTestTracer(), mockRepo, mockQueue)
 
 			res := httptest.NewRecorder()
 			ctx, _ := gin.CreateTestContext(res)
 			req, _ := http.NewRequest(http.MethodGet, "/api/v1/todos", nil)
 			ctx.Request = req
-
 			con.GetTodos(ctx)
 
 			assert.Equal(t, tt.expectedCode, res.Code)
@@ -124,10 +127,7 @@ func TestPostTodo(t *testing.T) {
 				mockRepo.EXPECT().CreateTodo(gomock.Any(), gomock.Any()).Return(tt.mockRet, tt.mockError)
 			}
 			mockQueue := mock_repository.NewMockQueue(ctrl)
-
-			tracer, shutdownProvider := util.NewTracer("app")
-			defer shutdownProvider()
-			con := NewController(tracer, mockRepo, mockQueue)
+			con := NewController(util.NewTestTracer(), mockRepo, mockQueue)
 
 			res := httptest.NewRecorder()
 			ctx, _ := gin.CreateTestContext(res)
@@ -137,7 +137,6 @@ func TestPostTodo(t *testing.T) {
 				"/api/v1/todos",
 				bytes.NewReader(body),
 			)
-
 			con.PostTodo(ctx)
 
 			assert.Equal(t, tt.expectedCode, res.Code)
@@ -188,10 +187,7 @@ func TestPostMail(t *testing.T) {
 			if tt.expectedCode != http.StatusBadRequest {
 				mockQueue.EXPECT().Push(gomock.Any(), gomock.Any()).Return(tt.mockError)
 			}
-
-			tracer, shutdownProvider := util.NewTracer("app")
-			defer shutdownProvider()
-			con := NewController(tracer, mockRepo, mockQueue)
+			con := NewController(util.NewTestTracer(), mockRepo, mockQueue)
 
 			res := httptest.NewRecorder()
 			ctx, _ := gin.CreateTestContext(res)
@@ -201,7 +197,6 @@ func TestPostMail(t *testing.T) {
 				"/api/v1/mails",
 				bytes.NewReader(body),
 			)
-
 			con.PostMail(ctx)
 
 			assert.Equal(t, tt.expectedCode, res.Code)
