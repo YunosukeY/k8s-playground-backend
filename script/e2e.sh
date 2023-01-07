@@ -33,6 +33,8 @@ run () {
     sleep 1
   done
 
+  go run "${repo_dir}/cmd/migration/main.go" -o up -t schema
+
   go test "${repo_dir}/cmd/e2e/main_test.go"
 }
 

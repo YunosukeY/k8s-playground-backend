@@ -1,4 +1,4 @@
-name: e2e
+name: ci
 on:
   push:
     branches:
@@ -7,7 +7,7 @@ on:
     branches:
       - master
 jobs:
-  e2e:
+  ci:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -23,4 +23,5 @@ jobs:
           MYSQL_PASSWORD=password1
           REDIS_PASSWORD=redis-stack
           EOF
-          ./script/e2e.sh run
+          docker compose up -d db
+          ./script/ci.sh run

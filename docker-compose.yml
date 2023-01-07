@@ -13,8 +13,6 @@ services:
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     ports:
       - 3306:3306
-    volumes:
-      - ./mysql/init:/docker-entrypoint-initdb.d
     healthcheck:
       # not `mysqladmin ping` because tcp port will open after start
       test: printf "GET / HTTP/1.1\n\n" > /dev/tcp/127.0.0.1/3306
