@@ -26,7 +26,7 @@ func envPath() (string, error) {
 	return filepath.Join(root, ".env"), nil
 }
 
-func loadEnv() error {
+func LoadEnv() error {
 	path, err := envPath()
 	if err != nil {
 		return err
@@ -36,4 +36,12 @@ func loadEnv() error {
 		log.Error().Err(err).Msg("")
 	}
 	return err
+}
+
+func SchemaPath() (string, error) {
+	root, err := rootPath()
+	if err != nil {
+		return "", nil
+	}
+	return filepath.Join(root, "db"), nil
 }

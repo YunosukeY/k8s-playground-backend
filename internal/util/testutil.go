@@ -12,7 +12,7 @@ import (
 )
 
 func NewTestDB(name string) (*gorm.DB, func()) {
-	if err := loadEnv(); err != nil {
+	if err := LoadEnv(); err != nil {
 		log.Panic().Err(err).Msg("")
 		panic(err)
 	}
