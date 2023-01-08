@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package todo;
+import "google/protobuf/empty.proto";
+
+option go_package = "internal/grpc";
+
+service TodoService {
+  rpc GetAll (google.protobuf.Empty) returns (Todos);
+  rpc Create (CreateTodoRequest) returns (Todo);
+}
+
+message Todo {
+  int32 id = 1;
+	string content = 2;
+}
+
+message Todos {
+  repeated Todo todos = 1;
+}
+
+message CreateTodoRequest {
+	string content = 1;
+}
