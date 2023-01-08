@@ -43,6 +43,8 @@ require (
 	github.com/uptrace/opentelemetry-go-extra/otelsql v0.1.17 // indirect
 	go.opentelemetry.io/otel/metric v0.33.0 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
+	google.golang.org/genproto v0.0.0-20230106154932-a12b697841d9 // indirect
+	google.golang.org/grpc v1.51.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
@@ -75,9 +77,9 @@ require (
 	github.com/uptrace/opentelemetry-go-extra/otelgorm v0.1.17
 	go.opentelemetry.io/otel/exporters/jaeger v1.11.2
 	golang.org/x/crypto v0.1.0 // indirect
-	golang.org/x/net v0.4.0 // indirect
-	golang.org/x/sys v0.3.0 // indirect
-	golang.org/x/text v0.5.0 // indirect
+	golang.org/x/net v0.5.0 // indirect
+	golang.org/x/sys v0.4.0 // indirect
+	golang.org/x/text v0.6.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gorm.io/driver/mysql v1.4.5
