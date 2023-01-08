@@ -9,6 +9,7 @@ package app
 import (
 	"github.com/YunosukeY/kind-backend/internal/app/controller"
 	"github.com/YunosukeY/kind-backend/internal/app/repository"
+	"github.com/YunosukeY/kind-backend/internal/grpc"
 	"github.com/YunosukeY/kind-backend/internal/util"
 )
 
@@ -34,6 +35,28 @@ func initializeDummyRouter(service string) (router, func()) {
 	controllerController := controller.NewController(tracer, repositoryRepository, queue)
 	appRouter := newRouter(controllerController)
 	return appRouter, func() {
+		cleanup()
+	}
+}
+
+func initializeServer(service string) (grpc.TodoServiceServer, func()) {
+	tracer, cleanup := util.NewTracer(service)
+	db := repository.NewDB()
+	repositoryRepository := repository.NewRepository(tracer, db)
+	writer := repository.NewWriter()
+	queue := repository.NewQueue(tracer, writer)
+	todoServiceServer := newServer(tracer, repositoryRepository, queue)
+	return todoServiceServer, func() {
+		cleanup()
+	}
+}
+
+func initializeDummyServer(service string) (grpc.TodoServiceServer, func()) {
+	tracer, cleanup := util.NewTracer(service)
+	repositoryRepository := repository.NewDummyRepository(tracer)
+	queue := repository.NewDummyQueue(tracer)
+	todoServiceServer := newServer(tracer, repositoryRepository, queue)
+	return todoServiceServer, func() {
 		cleanup()
 	}
 }

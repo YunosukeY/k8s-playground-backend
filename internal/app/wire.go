@@ -6,6 +6,7 @@ package app
 import (
 	"github.com/YunosukeY/kind-backend/internal/app/controller"
 	"github.com/YunosukeY/kind-backend/internal/app/repository"
+	"github.com/YunosukeY/kind-backend/internal/grpc"
 	"github.com/YunosukeY/kind-backend/internal/util"
 	"github.com/google/wire"
 )
@@ -18,4 +19,14 @@ func initializeRouter(service string) (router, func()) {
 func initializeDummyRouter(service string) (router, func()) {
 	wire.Build(newRouter, controller.NewController, util.NewTracer, repository.NewDummyRepository, repository.NewDummyQueue)
 	return router{}, func() {}
+}
+
+func initializeServer(service string) (grpc.TodoServiceServer, func()) {
+	wire.Build(newServer, util.NewTracer, repository.NewRepository, repository.NewDB, repository.NewQueue, repository.NewWriter)
+	return server{}, func() {}
+}
+
+func initializeDummyServer(service string) (grpc.TodoServiceServer, func()) {
+	wire.Build(newServer, util.NewTracer, repository.NewDummyRepository, repository.NewDummyQueue)
+	return server{}, func() {}
 }

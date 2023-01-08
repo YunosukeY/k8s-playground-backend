@@ -24,6 +24,7 @@ func execute() {
 func init() {
 	rootCmd.AddCommand(appCmd)
 	appCmd.Flags().BoolP("dummy", "d", false, "run with dummy middleware")
+	appCmd.Flags().BoolP("grpc", "g", false, "run grpc server")
 	rootCmd.AddCommand(authCmd)
 	authCmd.Flags().BoolP("dummy", "d", false, "run with dummy middleware")
 	rootCmd.AddCommand(mailCmd)
@@ -34,8 +35,13 @@ var appCmd = &cobra.Command{
 	Use:   "app",
 	Short: "Run an app server",
 	Run: func(cmd *cobra.Command, args []string) {
+		grpc, _ := cmd.Flags().GetBool("grpc")
 		dummy, _ := cmd.Flags().GetBool("dummy")
-		app.Run(dummy)
+		if grpc {
+			app.Serve(dummy)
+		} else {
+			app.Run(dummy)
+		}
 	},
 }
 
