@@ -2,13 +2,13 @@ package app
 
 import (
 	"context"
-	"fmt"
 	"net"
 
 	"github.com/YunosukeY/kind-backend/internal/app/model"
 	"github.com/YunosukeY/kind-backend/internal/app/repository"
 	"github.com/YunosukeY/kind-backend/internal/grpc"
 	"github.com/YunosukeY/kind-backend/internal/util"
+	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"go.opentelemetry.io/otel/trace"
 	grpclib "google.golang.org/grpc"
@@ -61,7 +61,9 @@ func (c server) Create(ctx context.Context, req *grpc.CreateTodoRequest) (*grpc.
 }
 
 func Serve(dummy bool) {
-	fmt.Println("grpc mode")
+	zerolog.SetGlobalLevel(zerolog.DebugLevel)
+	log.Logger = log.With().Caller().Logger()
+
 	listener, err := net.Listen("tcp", ":8080")
 	if err != nil {
 		panic(err)
@@ -78,8 +80,9 @@ func Serve(dummy bool) {
 	defer shutdownProvider()
 	grpc.RegisterTodoServiceServer(s, ts)
 
-	fmt.Println("start")
+	go util.RunPodCommonHandler()
 	if err := s.Serve(listener); err != nil {
+		log.Panic().Err(err).Msg("")
 		panic(err)
 	}
 }
