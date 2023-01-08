@@ -7,6 +7,7 @@ usage() {
   Usage:
   - e2e.sh up
   - e2e.sh run
+  - e2e.sh run_grpc
   - e2e.sh down
 USAGE
 }
@@ -38,11 +39,20 @@ run () {
   go test "${repo_dir}/cmd/e2e/main_test.go"
 }
 
+run_grpc () {
+  docker compose build app
+  docker run -d -p 8080:8080 backend main app -g -d
+
+  go test "${repo_dir}/cmd/e2e/grpc_test.go"
+}
+
 if [ "$command" == "up" ]; then
   up
 elif [ "$command" == "run" ]; then
   up
   run
+elif [ "$command" == "run_grpc" ]; then
+  run_grpc
 elif [ "$command" == "down" ]; then
   docker compose down
 else
