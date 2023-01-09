@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             (unknown)
-// source: proto/todo.proto
+// source: proto/todo/v1/todo.proto
 
 package grpc
 
@@ -11,7 +11,6 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -23,8 +22,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TodoServiceClient interface {
-	GetAll(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Todos, error)
-	Create(ctx context.Context, in *CreateTodoRequest, opts ...grpc.CallOption) (*Todo, error)
+	ListTodos(ctx context.Context, in *ListTodosRequest, opts ...grpc.CallOption) (*ListTodosResponse, error)
+	CreateTodo(ctx context.Context, in *CreateTodoRequest, opts ...grpc.CallOption) (*Todo, error)
 }
 
 type todoServiceClient struct {
@@ -35,18 +34,18 @@ func NewTodoServiceClient(cc grpc.ClientConnInterface) TodoServiceClient {
 	return &todoServiceClient{cc}
 }
 
-func (c *todoServiceClient) GetAll(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Todos, error) {
-	out := new(Todos)
-	err := c.cc.Invoke(ctx, "/todo.TodoService/GetAll", in, out, opts...)
+func (c *todoServiceClient) ListTodos(ctx context.Context, in *ListTodosRequest, opts ...grpc.CallOption) (*ListTodosResponse, error) {
+	out := new(ListTodosResponse)
+	err := c.cc.Invoke(ctx, "/todo.v1.TodoService/ListTodos", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *todoServiceClient) Create(ctx context.Context, in *CreateTodoRequest, opts ...grpc.CallOption) (*Todo, error) {
+func (c *todoServiceClient) CreateTodo(ctx context.Context, in *CreateTodoRequest, opts ...grpc.CallOption) (*Todo, error) {
 	out := new(Todo)
-	err := c.cc.Invoke(ctx, "/todo.TodoService/Create", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/todo.v1.TodoService/CreateTodo", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -57,8 +56,8 @@ func (c *todoServiceClient) Create(ctx context.Context, in *CreateTodoRequest, o
 // All implementations must embed UnimplementedTodoServiceServer
 // for forward compatibility
 type TodoServiceServer interface {
-	GetAll(context.Context, *emptypb.Empty) (*Todos, error)
-	Create(context.Context, *CreateTodoRequest) (*Todo, error)
+	ListTodos(context.Context, *ListTodosRequest) (*ListTodosResponse, error)
+	CreateTodo(context.Context, *CreateTodoRequest) (*Todo, error)
 	mustEmbedUnimplementedTodoServiceServer()
 }
 
@@ -66,11 +65,11 @@ type TodoServiceServer interface {
 type UnimplementedTodoServiceServer struct {
 }
 
-func (UnimplementedTodoServiceServer) GetAll(context.Context, *emptypb.Empty) (*Todos, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAll not implemented")
+func (UnimplementedTodoServiceServer) ListTodos(context.Context, *ListTodosRequest) (*ListTodosResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListTodos not implemented")
 }
-func (UnimplementedTodoServiceServer) Create(context.Context, *CreateTodoRequest) (*Todo, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+func (UnimplementedTodoServiceServer) CreateTodo(context.Context, *CreateTodoRequest) (*Todo, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateTodo not implemented")
 }
 func (UnimplementedTodoServiceServer) mustEmbedUnimplementedTodoServiceServer() {}
 
@@ -85,38 +84,38 @@ func RegisterTodoServiceServer(s grpc.ServiceRegistrar, srv TodoServiceServer) {
 	s.RegisterService(&TodoService_ServiceDesc, srv)
 }
 
-func _TodoService_GetAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+func _TodoService_ListTodos_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListTodosRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TodoServiceServer).GetAll(ctx, in)
+		return srv.(TodoServiceServer).ListTodos(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/todo.TodoService/GetAll",
+		FullMethod: "/todo.v1.TodoService/ListTodos",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TodoServiceServer).GetAll(ctx, req.(*emptypb.Empty))
+		return srv.(TodoServiceServer).ListTodos(ctx, req.(*ListTodosRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TodoService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _TodoService_CreateTodo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateTodoRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TodoServiceServer).Create(ctx, in)
+		return srv.(TodoServiceServer).CreateTodo(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/todo.TodoService/Create",
+		FullMethod: "/todo.v1.TodoService/CreateTodo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TodoServiceServer).Create(ctx, req.(*CreateTodoRequest))
+		return srv.(TodoServiceServer).CreateTodo(ctx, req.(*CreateTodoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -125,18 +124,18 @@ func _TodoService_Create_Handler(srv interface{}, ctx context.Context, dec func(
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var TodoService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "todo.TodoService",
+	ServiceName: "todo.v1.TodoService",
 	HandlerType: (*TodoServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetAll",
-			Handler:    _TodoService_GetAll_Handler,
+			MethodName: "ListTodos",
+			Handler:    _TodoService_ListTodos_Handler,
 		},
 		{
-			MethodName: "Create",
-			Handler:    _TodoService_Create_Handler,
+			MethodName: "CreateTodo",
+			Handler:    _TodoService_CreateTodo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/todo.proto",
+	Metadata: "proto/todo/v1/todo.proto",
 }
