@@ -24,3 +24,5 @@ jobs:
           REDIS_PASSWORD=redis-stack
           EOF
           ./script/e2e.sh run
+          ./script/e2e.sh down
+          ./script/e2e.sh run_grpc
