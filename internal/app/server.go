@@ -5,7 +5,7 @@ import (
 	"net"
 
 	"github.com/YunosukeY/kind-backend/internal/app/model"
-	"github.com/YunosukeY/kind-backend/internal/app/repository"
+	"github.com/YunosukeY/kind-backend/internal/app/usecase"
 	"github.com/YunosukeY/kind-backend/internal/grpc"
 	"github.com/YunosukeY/kind-backend/internal/util"
 	"github.com/gin-gonic/gin"
@@ -18,20 +18,19 @@ import (
 
 type server struct {
 	t trace.Tracer
-	r repository.Repository
-	q repository.Queue
 	grpc.UnimplementedTodoServiceServer
+	u usecase.Usecase
 }
 
-func newServer(t trace.Tracer, r repository.Repository, q repository.Queue) grpc.TodoServiceServer {
-	return server{t: t, r: r, q: q}
+func newServer(t trace.Tracer, u usecase.Usecase) grpc.TodoServiceServer {
+	return server{t: t, u: u}
 }
 
 func (c server) GetAll(ctx context.Context, _ *emptypb.Empty) (*grpc.Todos, error) {
 	child, span := c.t.Start(ctx, util.FuncName())
 	defer span.End()
 
-	ts, err := c.r.FindAllTodos(child)
+	ts, err := c.u.GetAllTodos(child)
 	if err != nil {
 		return nil, err
 	}
@@ -52,7 +51,7 @@ func (c server) Create(ctx context.Context, req *grpc.CreateTodoRequest) (*grpc.
 
 	todo := model.TodoForPostRequest{Content: req.GetContent()}
 
-	todoWithID, err := c.r.CreateTodo(child, todo)
+	todoWithID, err := c.u.CreateTodo(child, todo)
 	if err != nil {
 		return nil, err
 	}

@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/YunosukeY/kind-backend/internal/app/model"
-	"github.com/YunosukeY/kind-backend/internal/app/repository"
+	"github.com/YunosukeY/kind-backend/internal/app/usecase"
 	"github.com/YunosukeY/kind-backend/internal/util"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
@@ -19,19 +19,18 @@ type Controller interface {
 
 type controller struct {
 	t trace.Tracer
-	r repository.Repository
-	q repository.Queue
+	u usecase.Usecase
 }
 
-func NewController(t trace.Tracer, r repository.Repository, q repository.Queue) Controller {
-	return controller{t, r, q}
+func NewController(t trace.Tracer, u usecase.Usecase) Controller {
+	return controller{t, u}
 }
 
 func (c controller) GetTodos(ctx *gin.Context) {
 	child, span := c.t.Start(ctx.Request.Context(), util.FuncName())
 	defer span.End()
 
-	todos, err := c.r.FindAllTodos(child)
+	todos, err := c.u.GetAllTodos(child)
 	if err != nil {
 		ctx.AbortWithStatus(http.StatusInternalServerError)
 		return
@@ -51,7 +50,7 @@ func (c controller) PostTodo(ctx *gin.Context) {
 		return
 	}
 
-	todoWithID, err := c.r.CreateTodo(child, todo)
+	todoWithID, err := c.u.CreateTodo(child, todo)
 	if err != nil {
 		ctx.AbortWithStatus(http.StatusInternalServerError)
 		return
@@ -73,7 +72,7 @@ func (c controller) PostMail(ctx *gin.Context) {
 	}
 	log.Debug().Interface("mail", mail).Msg("")
 
-	if err := c.q.Push(child, mail); err != nil {
+	if err := c.u.SendMail(child, mail); err != nil {
 		ctx.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
