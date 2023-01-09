@@ -23,11 +23,11 @@ func initializeDummyRouter(service string) (router, func()) {
 }
 
 func initializeServer(service string) (grpc.TodoServiceServer, func()) {
-	wire.Build(newServer, util.NewTracer, usecase.NewUsecase, repository.NewRepository, repository.NewDB, repository.NewQueue, repository.NewWriter)
-	return server{}, func() {}
+	wire.Build(controller.NewServer, util.NewTracer, usecase.NewUsecase, repository.NewRepository, repository.NewDB, repository.NewQueue, repository.NewWriter)
+	return controller.Server{}, func() {}
 }
 
 func initializeDummyServer(service string) (grpc.TodoServiceServer, func()) {
-	wire.Build(newServer, util.NewTracer, usecase.NewUsecase, repository.NewDummyRepository, repository.NewDummyQueue)
-	return server{}, func() {}
+	wire.Build(controller.NewServer, util.NewTracer, usecase.NewUsecase, repository.NewDummyRepository, repository.NewDummyQueue)
+	return controller.Server{}, func() {}
 }

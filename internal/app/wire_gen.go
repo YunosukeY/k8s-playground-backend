@@ -49,7 +49,7 @@ func initializeServer(service string) (grpc.TodoServiceServer, func()) {
 	writer := repository.NewWriter()
 	queue := repository.NewQueue(tracer, writer)
 	usecaseUsecase := usecase.NewUsecase(tracer, repositoryRepository, queue)
-	todoServiceServer := newServer(tracer, usecaseUsecase)
+	todoServiceServer := controller.NewServer(tracer, usecaseUsecase)
 	return todoServiceServer, func() {
 		cleanup()
 	}
@@ -60,7 +60,7 @@ func initializeDummyServer(service string) (grpc.TodoServiceServer, func()) {
 	repositoryRepository := repository.NewDummyRepository(tracer)
 	queue := repository.NewDummyQueue(tracer)
 	usecaseUsecase := usecase.NewUsecase(tracer, repositoryRepository, queue)
-	todoServiceServer := newServer(tracer, usecaseUsecase)
+	todoServiceServer := controller.NewServer(tracer, usecaseUsecase)
 	return todoServiceServer, func() {
 		cleanup()
 	}
