@@ -11,22 +11,22 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
-type Controller interface {
+type RestController interface {
 	GetTodos(ctx *gin.Context)
 	PostTodo(ctx *gin.Context)
 	PostMail(ctx *gin.Context)
 }
 
-type controller struct {
+type restController struct {
 	t trace.Tracer
 	u usecase.Usecase
 }
 
-func NewController(t trace.Tracer, u usecase.Usecase) Controller {
-	return controller{t, u}
+func NewRestController(t trace.Tracer, u usecase.Usecase) RestController {
+	return restController{t, u}
 }
 
-func (c controller) GetTodos(ctx *gin.Context) {
+func (c restController) GetTodos(ctx *gin.Context) {
 	child, span := c.t.Start(ctx.Request.Context(), util.FuncName())
 	defer span.End()
 
@@ -39,7 +39,7 @@ func (c controller) GetTodos(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, todos)
 }
 
-func (c controller) PostTodo(ctx *gin.Context) {
+func (c restController) PostTodo(ctx *gin.Context) {
 	child, span := c.t.Start(ctx.Request.Context(), util.FuncName())
 	defer span.End()
 
@@ -60,7 +60,7 @@ func (c controller) PostTodo(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, todoWithID)
 }
 
-func (c controller) PostMail(ctx *gin.Context) {
+func (c restController) PostMail(ctx *gin.Context) {
 	child, span := c.t.Start(ctx.Request.Context(), util.FuncName())
 	defer span.End()
 

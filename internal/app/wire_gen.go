@@ -23,8 +23,8 @@ func initializeRouter(service string) (router, func()) {
 	writer := repository.NewWriter()
 	queue := repository.NewQueue(tracer, writer)
 	usecaseUsecase := usecase.NewUsecase(tracer, repositoryRepository, queue)
-	controllerController := controller.NewController(tracer, usecaseUsecase)
-	appRouter := newRouter(controllerController)
+	restController := controller.NewRestController(tracer, usecaseUsecase)
+	appRouter := newRouter(restController)
 	return appRouter, func() {
 		cleanup()
 	}
@@ -35,8 +35,8 @@ func initializeDummyRouter(service string) (router, func()) {
 	repositoryRepository := repository.NewDummyRepository(tracer)
 	queue := repository.NewDummyQueue(tracer)
 	usecaseUsecase := usecase.NewUsecase(tracer, repositoryRepository, queue)
-	controllerController := controller.NewController(tracer, usecaseUsecase)
-	appRouter := newRouter(controllerController)
+	restController := controller.NewRestController(tracer, usecaseUsecase)
+	appRouter := newRouter(restController)
 	return appRouter, func() {
 		cleanup()
 	}

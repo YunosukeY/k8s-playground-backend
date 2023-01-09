@@ -60,7 +60,7 @@ func TestGetTodos(t *testing.T) {
 			defer ctrl.Finish()
 			mock := mock_usecase.NewMockUsecase(ctrl)
 			mock.EXPECT().GetAllTodos(gomock.Any()).Return(tt.mockRet, tt.mockErr)
-			con := NewController(util.NewTestTracer(), mock)
+			con := NewRestController(util.NewTestTracer(), mock)
 
 			res := httptest.NewRecorder()
 			ctx, _ := gin.CreateTestContext(res)
@@ -125,7 +125,7 @@ func TestPostTodo(t *testing.T) {
 			if tt.expectedCode != http.StatusBadRequest {
 				mock.EXPECT().CreateTodo(gomock.Any(), gomock.Any()).Return(tt.mockRet, tt.mockError)
 			}
-			con := NewController(util.NewTestTracer(), mock)
+			con := NewRestController(util.NewTestTracer(), mock)
 
 			res := httptest.NewRecorder()
 			ctx, _ := gin.CreateTestContext(res)
@@ -184,7 +184,7 @@ func TestPostMail(t *testing.T) {
 			if tt.expectedCode != http.StatusBadRequest {
 				mock.EXPECT().SendMail(gomock.Any(), gomock.Any()).Return(tt.mockError)
 			}
-			con := NewController(util.NewTestTracer(), mock)
+			con := NewRestController(util.NewTestTracer(), mock)
 
 			res := httptest.NewRecorder()
 			ctx, _ := gin.CreateTestContext(res)

@@ -13,12 +13,12 @@ import (
 )
 
 func initializeRouter(service string) (router, func()) {
-	wire.Build(newRouter, controller.NewController, util.NewTracer, usecase.NewUsecase, repository.NewRepository, repository.NewDB, repository.NewQueue, repository.NewWriter)
+	wire.Build(newRouter, controller.NewRestController, util.NewTracer, usecase.NewUsecase, repository.NewRepository, repository.NewDB, repository.NewQueue, repository.NewWriter)
 	return router{}, func() {}
 }
 
 func initializeDummyRouter(service string) (router, func()) {
-	wire.Build(newRouter, controller.NewController, util.NewTracer, usecase.NewUsecase, repository.NewDummyRepository, repository.NewDummyQueue)
+	wire.Build(newRouter, controller.NewRestController, util.NewTracer, usecase.NewUsecase, repository.NewDummyRepository, repository.NewDummyQueue)
 	return router{}, func() {}
 }
 
