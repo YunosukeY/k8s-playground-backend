@@ -1,65 +1,15 @@
 package app
 
 import (
-	"context"
 	"net"
 
-	"github.com/YunosukeY/kind-backend/internal/app/model"
-	"github.com/YunosukeY/kind-backend/internal/app/repository"
 	"github.com/YunosukeY/kind-backend/internal/grpc"
 	"github.com/YunosukeY/kind-backend/internal/util"
 	"github.com/gin-gonic/gin"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"go.opentelemetry.io/otel/trace"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
-
-type server struct {
-	t trace.Tracer
-	r repository.Repository
-	q repository.Queue
-	grpc.UnimplementedTodoServiceServer
-}
-
-func newServer(t trace.Tracer, r repository.Repository, q repository.Queue) grpc.TodoServiceServer {
-	return server{t: t, r: r, q: q}
-}
-
-func (c server) GetAll(ctx context.Context, _ *emptypb.Empty) (*grpc.Todos, error) {
-	child, span := c.t.Start(ctx, util.FuncName())
-	defer span.End()
-
-	ts, err := c.r.FindAllTodos(child)
-	if err != nil {
-		return nil, err
-	}
-	log.Debug().Interface("todos", ts).Msg("")
-
-	todos := []*grpc.Todo{}
-	for _, t := range ts {
-		todo := grpc.Todo{Id: int32(t.ID), Content: t.Content}
-		todos = append(todos, &todo)
-	}
-
-	return &grpc.Todos{Todos: todos}, nil
-}
-
-func (c server) Create(ctx context.Context, req *grpc.CreateTodoRequest) (*grpc.Todo, error) {
-	child, span := c.t.Start(ctx, util.FuncName())
-	defer span.End()
-
-	todo := model.TodoForPostRequest{Content: req.GetContent()}
-
-	todoWithID, err := c.r.CreateTodo(child, todo)
-	if err != nil {
-		return nil, err
-	}
-	log.Debug().Interface("todo", todoWithID).Msg("")
-
-	return &grpc.Todo{Id: int32(todoWithID.ID), Content: todoWithID.Content}, nil
-}
 
 func Serve(dummy bool) {
 	zerolog.SetGlobalLevel(zerolog.DebugLevel)

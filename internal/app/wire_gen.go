@@ -9,6 +9,7 @@ package app
 import (
 	"github.com/YunosukeY/kind-backend/internal/app/controller"
 	"github.com/YunosukeY/kind-backend/internal/app/repository"
+	"github.com/YunosukeY/kind-backend/internal/app/usecase"
 	"github.com/YunosukeY/kind-backend/internal/grpc"
 	"github.com/YunosukeY/kind-backend/internal/util"
 )
@@ -21,8 +22,9 @@ func initializeRouter(service string) (router, func()) {
 	repositoryRepository := repository.NewRepository(tracer, db)
 	writer := repository.NewWriter()
 	queue := repository.NewQueue(tracer, writer)
-	controllerController := controller.NewController(tracer, repositoryRepository, queue)
-	appRouter := newRouter(controllerController)
+	usecaseUsecase := usecase.NewUsecase(tracer, repositoryRepository, queue)
+	restController := controller.NewRestController(tracer, usecaseUsecase)
+	appRouter := newRouter(restController)
 	return appRouter, func() {
 		cleanup()
 	}
@@ -32,8 +34,9 @@ func initializeDummyRouter(service string) (router, func()) {
 	tracer, cleanup := util.NewTracer(service)
 	repositoryRepository := repository.NewDummyRepository(tracer)
 	queue := repository.NewDummyQueue(tracer)
-	controllerController := controller.NewController(tracer, repositoryRepository, queue)
-	appRouter := newRouter(controllerController)
+	usecaseUsecase := usecase.NewUsecase(tracer, repositoryRepository, queue)
+	restController := controller.NewRestController(tracer, usecaseUsecase)
+	appRouter := newRouter(restController)
 	return appRouter, func() {
 		cleanup()
 	}
@@ -45,7 +48,8 @@ func initializeServer(service string) (grpc.TodoServiceServer, func()) {
 	repositoryRepository := repository.NewRepository(tracer, db)
 	writer := repository.NewWriter()
 	queue := repository.NewQueue(tracer, writer)
-	todoServiceServer := newServer(tracer, repositoryRepository, queue)
+	usecaseUsecase := usecase.NewUsecase(tracer, repositoryRepository, queue)
+	todoServiceServer := controller.NewServer(tracer, usecaseUsecase)
 	return todoServiceServer, func() {
 		cleanup()
 	}
@@ -55,7 +59,8 @@ func initializeDummyServer(service string) (grpc.TodoServiceServer, func()) {
 	tracer, cleanup := util.NewTracer(service)
 	repositoryRepository := repository.NewDummyRepository(tracer)
 	queue := repository.NewDummyQueue(tracer)
-	todoServiceServer := newServer(tracer, repositoryRepository, queue)
+	usecaseUsecase := usecase.NewUsecase(tracer, repositoryRepository, queue)
+	todoServiceServer := controller.NewServer(tracer, usecaseUsecase)
 	return todoServiceServer, func() {
 		cleanup()
 	}

@@ -8,7 +8,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	mock_repository "github.com/YunosukeY/kind-backend/internal/app/mock/repository"
+	mock_usecase "github.com/YunosukeY/kind-backend/internal/app/mock/usecase"
 	"github.com/YunosukeY/kind-backend/internal/app/model"
 	"github.com/YunosukeY/kind-backend/internal/util"
 	"github.com/gin-gonic/gin"
@@ -58,10 +58,9 @@ func TestGetTodos(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
-			mockRepo := mock_repository.NewMockRepository(ctrl)
-			mockRepo.EXPECT().FindAllTodos(gomock.Any()).Return(tt.mockRet, tt.mockErr)
-			mockQueue := mock_repository.NewMockQueue(ctrl)
-			con := NewController(util.NewTestTracer(), mockRepo, mockQueue)
+			mock := mock_usecase.NewMockUsecase(ctrl)
+			mock.EXPECT().GetAllTodos(gomock.Any()).Return(tt.mockRet, tt.mockErr)
+			con := NewRestController(util.NewTestTracer(), mock)
 
 			res := httptest.NewRecorder()
 			ctx, _ := gin.CreateTestContext(res)
@@ -122,12 +121,11 @@ func TestPostTodo(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
-			mockRepo := mock_repository.NewMockRepository(ctrl)
+			mock := mock_usecase.NewMockUsecase(ctrl)
 			if tt.expectedCode != http.StatusBadRequest {
-				mockRepo.EXPECT().CreateTodo(gomock.Any(), gomock.Any()).Return(tt.mockRet, tt.mockError)
+				mock.EXPECT().CreateTodo(gomock.Any(), gomock.Any()).Return(tt.mockRet, tt.mockError)
 			}
-			mockQueue := mock_repository.NewMockQueue(ctrl)
-			con := NewController(util.NewTestTracer(), mockRepo, mockQueue)
+			con := NewRestController(util.NewTestTracer(), mock)
 
 			res := httptest.NewRecorder()
 			ctx, _ := gin.CreateTestContext(res)
@@ -182,12 +180,11 @@ func TestPostMail(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
-			mockRepo := mock_repository.NewMockRepository(ctrl)
-			mockQueue := mock_repository.NewMockQueue(ctrl)
+			mock := mock_usecase.NewMockUsecase(ctrl)
 			if tt.expectedCode != http.StatusBadRequest {
-				mockQueue.EXPECT().Push(gomock.Any(), gomock.Any()).Return(tt.mockError)
+				mock.EXPECT().SendMail(gomock.Any(), gomock.Any()).Return(tt.mockError)
 			}
-			con := NewController(util.NewTestTracer(), mockRepo, mockQueue)
+			con := NewRestController(util.NewTestTracer(), mock)
 
 			res := httptest.NewRecorder()
 			ctx, _ := gin.CreateTestContext(res)
