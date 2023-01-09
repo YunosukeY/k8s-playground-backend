@@ -8,10 +8,11 @@ import (
 	"github.com/YunosukeY/kind-backend/internal/app/repository"
 	"github.com/YunosukeY/kind-backend/internal/grpc"
 	"github.com/YunosukeY/kind-backend/internal/util"
+	"github.com/gin-gonic/gin"
+
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"go.opentelemetry.io/otel/trace"
-	grpclib "google.golang.org/grpc"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
@@ -63,13 +64,14 @@ func (c server) Create(ctx context.Context, req *grpc.CreateTodoRequest) (*grpc.
 func Serve(dummy bool) {
 	zerolog.SetGlobalLevel(zerolog.DebugLevel)
 	log.Logger = log.With().Caller().Logger()
+	gin.SetMode(gin.ReleaseMode)
 
 	listener, err := net.Listen("tcp", ":8080")
 	if err != nil {
 		panic(err)
 	}
 
-	s := grpclib.NewServer()
+	s := util.DefaultServer()
 	var ts grpc.TodoServiceServer
 	var shutdownProvider func()
 	if !dummy {
