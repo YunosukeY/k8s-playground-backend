@@ -2,7 +2,7 @@
 
 ## Services
 
-In Rest mode:
+In REST mode:
 
 ![service architecture](./image/rest-service-architecture.png)
 
