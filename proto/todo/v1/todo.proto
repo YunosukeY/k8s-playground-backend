@@ -1,22 +1,22 @@
 syntax = "proto3";
 
-package todo;
-
-import "google/protobuf/empty.proto";
+package todo.v1;
 
 option go_package = "internal/grpc";
 
 service TodoService {
-  rpc GetAll(google.protobuf.Empty) returns (Todos);
-  rpc Create(CreateTodoRequest) returns (Todo);
+  rpc ListTodos(ListTodosRequest) returns (ListTodosResponse);
+  rpc CreateTodo(CreateTodoRequest) returns (Todo);
 }
+
+message ListTodosRequest {}
 
 message Todo {
   int32 id = 1;
   string content = 2;
 }
 
-message Todos {
+message ListTodosResponse {
   repeated Todo todos = 1;
 }
 

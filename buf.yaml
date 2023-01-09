@@ -5,3 +5,6 @@ breaking:
 lint:
   use:
     - DEFAULT
+  except:
+    - PACKAGE_DIRECTORY_MATCH
+    - RPC_RESPONSE_STANDARD_NAME

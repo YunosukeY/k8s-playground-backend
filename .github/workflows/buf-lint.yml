@@ -1,0 +1,17 @@
+name: buf lint
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  buf-lint:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: aquaproj/aqua-installer@v2.0.2
+        with:
+          aqua_version: v1.30.3
+      - run: buf lint
