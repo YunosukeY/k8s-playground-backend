@@ -24,7 +24,7 @@
 - REST
 - gRPC
 
-## Architecture
+<!-- ## Architecture
 
 This sample application consists of three services: app, auth, and mail.<br>
 
@@ -42,7 +42,7 @@ in local use, you just need to add `X-Auth` header to use private endpoints.
 
 Sending mails are handled asynchronously.<br>
 The app service receives sending requests at `/api/v1/mails`, and enqueues messages.<br>
-The mail service dequeues messages, and sends e-mails.
+The mail service dequeues messages, and sends e-mails. -->
 
 <!--
 ## Local Usage

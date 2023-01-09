@@ -1,16 +1,17 @@
-# 設計書
+# Architecture
 
-## 認証
+## Services
 
-### 1. ログイン
+In Rest mode:
 
-認証に成功したら、キャッシュに認証情報を、cookie に認証情報のキーをセットしておく
+![service architecture](./image/rest-service-architecture.png)
 
-### 2. 認証
+In gRPC mode:
 
-cookie から認証情報のキーを取り出し、キャッシュと突合する
-確認できたら認証済みであることをヘッダに追加
+...
 
-### 3. 認証が必要なエンドポイント
+## Classes
 
-ヘッダで認証済みであるかを確認
+App service
+
+![class architecture](./image/class-architecture.png)
