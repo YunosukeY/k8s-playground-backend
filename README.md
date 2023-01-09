@@ -19,6 +19,11 @@
 - Distroless Image
 - Nonroot User
 
+### API Mode
+
+- REST
+- gRPC
+
 ## Architecture
 
 This sample application consists of three services: app, auth, and mail.<br>
