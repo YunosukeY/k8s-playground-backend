@@ -18,8 +18,10 @@ message Todo {
   string content = 2;
 }
 
-message ListTodosResponse { repeated Todo todos = 1; }
+message ListTodosResponse {
+  repeated Todo todos = 1;
+}
 
 message CreateTodoRequest {
-  string content = 1 [ (validate.rules).string.min_len = 1 ];
+  string content = 1 [(validate.rules).string.min_len = 1];
 }
