@@ -395,10 +395,10 @@ func (m *CreateTodoRequest) validate(all bool) error {
 
 	var errors []error
 
-	if utf8.RuneCountInString(m.GetContent()) < 3 {
+	if utf8.RuneCountInString(m.GetContent()) < 1 {
 		err := CreateTodoRequestValidationError{
 			field:  "Content",
-			reason: "value length must be at least 3 runes",
+			reason: "value length must be at least 1 runes",
 		}
 		if !all {
 			return err
