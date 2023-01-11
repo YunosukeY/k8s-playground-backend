@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package todo.v1;
 
+import "validate/validate.proto";
+
 option go_package = "internal/grpc";
 
 service TodoService {
@@ -21,5 +23,5 @@ message ListTodosResponse {
 }
 
 message CreateTodoRequest {
-  string content = 1;
+  string content = 1 [(validate.rules).string.min_len = 3];
 }

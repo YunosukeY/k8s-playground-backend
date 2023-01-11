@@ -5,3 +5,6 @@ plugins:
     out: .
   - plugin: go-grpc
     out: .
+  - plugin: validate
+    out: .
+    opt: lang=go
