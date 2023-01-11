@@ -31,4 +31,7 @@ func TestGrpc(t *testing.T) {
 	todos, err = client.ListTodos(context.Background(), &grpc.ListTodosRequest{})
 	assert.Nil(t, err)
 	assert.Len(t, todos.GetTodos(), 1)
+
+	_, err = client.CreateTodo(context.Background(), &grpc.CreateTodoRequest{Content: ""})
+	assert.NotNil(t, err)
 }
