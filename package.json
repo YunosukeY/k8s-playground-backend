@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@bufbuild/connect-web": "^0.6.0",
+    "@bufbuild/protobuf": "^1.0.0"
+  }
+}
