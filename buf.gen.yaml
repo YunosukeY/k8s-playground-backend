@@ -8,3 +8,9 @@ plugins:
   - plugin: validate
     out: .
     opt: lang=go
+  - plugin: buf.build/grpc/web
+    out: gen
+    opt: import_style=typescript,mode=grpcweb
+  - plugin: buf.build/protocolbuffers/js
+    out: gen
+    opt: import_style=commonjs,binary
