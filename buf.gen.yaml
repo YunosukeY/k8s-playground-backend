@@ -8,3 +8,10 @@ plugins:
   - plugin: validate
     out: .
     opt: lang=go
+  - plugin: buf.build/bufbuild/connect-web
+    out: gen
+    opt: target=ts
+  # dependencies
+  - plugin: buf.build/bufbuild/es
+    out: gen
+    opt: target=ts
