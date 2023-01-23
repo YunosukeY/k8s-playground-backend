@@ -70,7 +70,7 @@ services:
     image: backend
     build: .
     container_name: app
-    entrypoint: ["main", "app", "-g", "-d"]
+    entrypoint: ["main", "app"]
     ports:
       - 8080:8080
       - 8888:8888
@@ -82,12 +82,12 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DBARGS: charset=utf8&parseTime=True&loc=Local
       KAFKA_HOST: queue
-    # restart: on-failure:10
-    # depends_on:
-    #   db:
-    #     condition: service_healthy
-    #   queue:
-    #     condition: service_healthy
+    restart: on-failure:10
+    depends_on:
+      db:
+        condition: service_healthy
+      queue:
+        condition: service_healthy
   auth:
     image: backend
     build: .
