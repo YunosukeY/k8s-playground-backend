@@ -3,6 +3,7 @@ module github.com/YunosukeY/kind-backend
 go 1.19
 
 require (
+	github.com/envoyproxy/protoc-gen-validate v0.9.1
 	github.com/gin-gonic/gin v1.8.2
 	github.com/gorilla/securecookie v1.1.1
 	github.com/segmentio/kafka-go v0.4.38
@@ -11,7 +12,7 @@ require (
 	go.opentelemetry.io/otel v1.11.2
 	go.opentelemetry.io/otel/sdk v1.11.2
 	go.opentelemetry.io/otel/trace v1.11.2
-	google.golang.org/grpc v1.52.0
+	google.golang.org/grpc v1.52.1
 	gorm.io/gorm v1.24.3
 )
 
@@ -20,7 +21,6 @@ require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
-	github.com/envoyproxy/protoc-gen-validate v0.9.1 // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-redis/redis/extra/rediscmd/v9 v9.0.0-rc.2 // indirect
