@@ -32,7 +32,7 @@ services:
       timeout: 1s
       retries: 5
   zookeeper:
-    image: bitnami/zookeeper:3.8.0
+    image: bitnami/zookeeper:3.8.1
     container_name: zookeeper
     ports:
       - 2181:2181
