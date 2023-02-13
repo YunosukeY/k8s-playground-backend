@@ -59,7 +59,7 @@ require (
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.1 // indirect
 	github.com/go-redis/redis/extra/redisotel/v9 v9.0.0-rc.2
-	github.com/go-redis/redis/v9 v9.0.0-rc.2
+	github.com/go-redis/redis/v9 v9.0.2
 	github.com/goccy/go-json v0.9.11 // indirect
 	github.com/golang-migrate/migrate/v4 v4.15.2
 	github.com/golang/mock v1.6.0
