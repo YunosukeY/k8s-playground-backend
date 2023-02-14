@@ -6,6 +6,8 @@ require (
 	github.com/envoyproxy/protoc-gen-validate v0.9.1
 	github.com/gin-gonic/gin v1.8.2
 	github.com/gorilla/securecookie v1.1.1
+	github.com/redis/go-redis/extra/redisotel/v9 v9.0.2
+	github.com/redis/go-redis/v9 v9.0.2
 	github.com/segmentio/kafka-go v0.4.38
 	github.com/spf13/cobra v1.6.1
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.39.0
@@ -23,7 +25,6 @@ require (
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/go-redis/redis/extra/rediscmd/v9 v9.0.0-rc.2 // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/gorilla/context v1.1.1 // indirect
@@ -42,8 +43,6 @@ require (
 	github.com/prometheus/common v0.37.0 // indirect
 	github.com/prometheus/procfs v0.8.0 // indirect
 	github.com/redis/go-redis/extra/rediscmd/v9 v9.0.2 // indirect
-	github.com/redis/go-redis/extra/redisotel/v9 v9.0.2 // indirect
-	github.com/redis/go-redis/v9 v9.0.2 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/uptrace/opentelemetry-go-extra/otelsql v0.1.18 // indirect
 	go.opentelemetry.io/otel/metric v0.35.0 // indirect
@@ -61,8 +60,6 @@ require (
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.1 // indirect
-	github.com/go-redis/redis/extra/redisotel/v9 v9.0.0-rc.2
-	github.com/go-redis/redis/v9 v9.0.0-rc.2
 	github.com/goccy/go-json v0.9.11 // indirect
 	github.com/golang-migrate/migrate/v4 v4.15.2
 	github.com/golang/mock v1.6.0
