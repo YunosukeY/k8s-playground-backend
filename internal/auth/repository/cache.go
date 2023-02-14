@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/YunosukeY/kind-backend/internal/util"
-	"github.com/go-redis/redis/extra/redisotel/v9"
-	"github.com/go-redis/redis/v9"
+	"github.com/redis/go-redis/extra/redisotel/v9"
+	"github.com/redis/go-redis/v9"
 	"github.com/rs/zerolog/log"
 	"go.opentelemetry.io/otel/trace"
 )
