@@ -69,7 +69,7 @@ require (
 	github.com/golang-migrate/migrate/v4 v4.15.2
 	github.com/golang/mock v1.6.0
 	github.com/google/wire v0.5.0
-	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
+	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
 	github.com/joho/godotenv v1.5.1
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
