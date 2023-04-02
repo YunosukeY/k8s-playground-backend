@@ -7,7 +7,7 @@ require (
 	github.com/gin-gonic/gin v1.9.0
 	github.com/gorilla/securecookie v1.1.1
 	github.com/redis/go-redis/extra/redisotel/v9 v9.0.2
-	github.com/redis/go-redis/v9 v9.0.2
+	github.com/redis/go-redis/v9 v9.0.3
 	github.com/segmentio/kafka-go v0.4.39
 	github.com/spf13/cobra v1.6.1
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.40.0
