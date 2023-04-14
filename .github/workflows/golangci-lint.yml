@@ -14,4 +14,4 @@ jobs:
       - uses: aquaproj/aqua-installer@v2.0.2
         with:
           aqua_version: v2.3.2
-      - run: golangci-lint run --out-format=github-actions
+      - run: golangci-lint run
