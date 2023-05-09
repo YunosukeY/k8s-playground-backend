@@ -3,7 +3,7 @@ module github.com/YunosukeY/kind-backend
 go 1.19
 
 require (
-	github.com/envoyproxy/protoc-gen-validate v1.0.0
+	github.com/envoyproxy/protoc-gen-validate v1.0.1
 	github.com/gin-gonic/gin v1.9.0
 	github.com/gorilla/securecookie v1.1.1
 	github.com/redis/go-redis/extra/redisotel/v9 v9.0.2
