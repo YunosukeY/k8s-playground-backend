@@ -82,7 +82,7 @@ require (
 	github.com/stretchr/testify v1.8.3
 	github.com/ugorji/go/codec v1.2.9 // indirect
 	github.com/uptrace/opentelemetry-go-extra/otelgorm v0.2.0
-	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.41.1
+	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.42.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.16.0
 	golang.org/x/crypto v0.7.0 // indirect
 	golang.org/x/net v0.10.0 // indirect
