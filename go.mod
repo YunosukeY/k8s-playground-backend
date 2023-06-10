@@ -10,7 +10,7 @@ require (
 	github.com/redis/go-redis/v9 v9.0.5
 	github.com/segmentio/kafka-go v0.4.40
 	github.com/spf13/cobra v1.7.0
-	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.41.1
+	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.42.0
 	go.opentelemetry.io/otel v1.15.1
 	go.opentelemetry.io/otel/sdk v1.15.1
 	go.opentelemetry.io/otel/trace v1.15.1
