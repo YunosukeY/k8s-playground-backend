@@ -6,7 +6,7 @@ require (
 	github.com/envoyproxy/protoc-gen-validate v1.0.1
 	github.com/gin-gonic/gin v1.9.1
 	github.com/gorilla/securecookie v1.1.1
-	github.com/redis/go-redis/extra/redisotel/v9 v9.0.4
+	github.com/redis/go-redis/extra/redisotel/v9 v9.0.5
 	github.com/redis/go-redis/v9 v9.0.5
 	github.com/segmentio/kafka-go v0.4.40
 	github.com/spf13/cobra v1.7.0
