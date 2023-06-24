@@ -49,7 +49,7 @@ require (
 	github.com/redis/go-redis/extra/rediscmd/v9 v9.0.5 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
-	github.com/uptrace/opentelemetry-go-extra/otelsql v0.2.1 // indirect
+	github.com/uptrace/opentelemetry-go-extra/otelsql v0.2.2 // indirect
 	go.opentelemetry.io/otel/metric v1.16.0 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	golang.org/x/arch v0.3.0 // indirect
@@ -82,7 +82,7 @@ require (
 	github.com/rs/zerolog v1.29.1
 	github.com/stretchr/testify v1.8.4
 	github.com/ugorji/go/codec v1.2.11 // indirect
-	github.com/uptrace/opentelemetry-go-extra/otelgorm v0.2.1
+	github.com/uptrace/opentelemetry-go-extra/otelgorm v0.2.2
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.42.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.16.0
 	golang.org/x/crypto v0.9.0 // indirect
