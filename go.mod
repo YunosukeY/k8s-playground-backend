@@ -3,7 +3,7 @@ module github.com/YunosukeY/kind-backend
 go 1.19
 
 require (
-	github.com/envoyproxy/protoc-gen-validate v1.0.1
+	github.com/envoyproxy/protoc-gen-validate v1.0.2
 	github.com/gin-gonic/gin v1.9.1
 	github.com/gorilla/securecookie v1.1.1
 	github.com/redis/go-redis/extra/redisotel/v9 v9.0.5
@@ -85,10 +85,10 @@ require (
 	github.com/uptrace/opentelemetry-go-extra/otelgorm v0.2.2
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.42.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.16.0
-	golang.org/x/crypto v0.9.0 // indirect
-	golang.org/x/net v0.10.0 // indirect
-	golang.org/x/sys v0.8.0 // indirect
-	golang.org/x/text v0.9.0 // indirect
+	golang.org/x/crypto v0.10.0 // indirect
+	golang.org/x/net v0.11.0 // indirect
+	golang.org/x/sys v0.9.0 // indirect
+	golang.org/x/text v0.10.0 // indirect
 	google.golang.org/protobuf v1.31.0
 	gorm.io/driver/mysql v1.5.1
 )
