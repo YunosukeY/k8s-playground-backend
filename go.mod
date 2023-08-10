@@ -28,7 +28,7 @@ require (
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
 	github.com/go-logr/logr v1.2.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/go-sql-driver/mysql v1.7.0 // indirect
+	github.com/go-sql-driver/mysql v1.7.1 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/sessions v1.2.1 // indirect
@@ -59,7 +59,7 @@ require (
 )
 
 require (
-	github.com/DATA-DOG/go-txdb v0.1.6
+	github.com/DATA-DOG/go-txdb v0.1.7
 	github.com/gin-contrib/cors v1.4.0
 	github.com/gin-contrib/logger v0.2.6
 	github.com/gin-contrib/sessions v0.0.5
