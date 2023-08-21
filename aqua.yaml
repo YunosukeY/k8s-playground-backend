@@ -9,5 +9,5 @@ registries:
 - type: standard
   ref: v4.40.0 # renovate: depName=aquaproj/aqua-registry
 packages:
-- name: golangci/golangci-lint@v1.54.1
+- name: golangci/golangci-lint@v1.54.2
 - name: bufbuild/buf@v1.26.1
