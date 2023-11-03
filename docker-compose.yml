@@ -120,7 +120,7 @@ services:
       mailhog:
         condition: service_started
   jaeger:
-    image: jaegertracing/all-in-one:1.50
+    image: jaegertracing/all-in-one:1.51
     container_name: jaeger
     ports:
       - 16686:16686
