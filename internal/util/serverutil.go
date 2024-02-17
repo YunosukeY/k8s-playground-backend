@@ -3,9 +3,8 @@ package util
 import (
 	"context"
 
-	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
-	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
-	grpc_validator "github.com/grpc-ecosystem/go-grpc-middleware/validator"
+	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/recovery"
+	grpc_validator "github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/validator"
 	"github.com/rs/zerolog/log"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"google.golang.org/grpc"
@@ -32,11 +31,11 @@ func zerologUnaryServerInterceptor(ctx context.Context, req interface{}, info *g
 
 func DefaultServer() *grpclib.Server {
 	return grpclib.NewServer(
-		grpclib.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
+		grpc.ChainUnaryInterceptor(
 			grpc_recovery.UnaryServerInterceptor(),
 			zerologUnaryServerInterceptor,
 			grpc_validator.UnaryServerInterceptor(),
-		)),
+		),
 		grpc.StatsHandler(otelgrpc.NewServerHandler()),
 	)
 
