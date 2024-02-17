@@ -405,6 +405,8 @@ go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.
 go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.44.0/go.mod h1:+H7htXVkUjPfQ45PNlcbXUmMXUr16uXDvuR+7TAGfVQ=
 go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.45.0 h1:0KYeVr81ogcVRLXVcXFuPQMNZngplnP8MqrE8CqvHeg=
 go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.45.0/go.mod h1:ro3eEFOynMu0p59YVUFFbkOeaPREbqc5yDR2HnGpFc0=
+go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.48.0 h1:9fRyGkm/rbLuNNJsk9YY2c7Tpjf9tRjm1BAa48L3ypU=
+go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.48.0/go.mod h1:7eRxLMX2ua+Pwtw1lkj8L0i0aykVQ/CafXhARYY056k=
 go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.42.0 h1:ZOLJc06r4CB42laIXg/7udr0pbZyuAihN10A/XuiQRY=
 go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.42.0/go.mod h1:5z+/ZWJQKXa9YT34fQNx5K8Hd1EoIhvtUygUQPqEOgQ=
 go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.43.0 h1:7XZai4VhA473clBrOqqHdjHBImGfyEtv0qW4nnn/kAo=
