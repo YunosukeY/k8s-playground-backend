@@ -8,6 +8,7 @@ import (
 	grpc_validator "github.com/grpc-ecosystem/go-grpc-middleware/validator"
 	"github.com/rs/zerolog/log"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
+	"google.golang.org/grpc"
 	grpclib "google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/peer"
@@ -35,8 +36,8 @@ func DefaultServer() *grpclib.Server {
 			grpc_recovery.UnaryServerInterceptor(),
 			zerologUnaryServerInterceptor,
 			grpc_validator.UnaryServerInterceptor(),
-			otelgrpc.UnaryServerInterceptor(),
 		)),
+		grpc.StatsHandler(otelgrpc.NewServerHandler()),
 	)
 
 }
