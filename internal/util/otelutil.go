@@ -7,7 +7,7 @@ import (
 	"github.com/rs/zerolog/log"
 
 	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/exporters/jaeger"
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
 	"go.opentelemetry.io/otel/sdk/resource"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
@@ -17,7 +17,9 @@ import (
 func NewTracer(service string) (trace.Tracer, func()) {
 	url := getJaegerURL()
 
-	exporter, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(url)))
+	ctx := context.Background()
+	opt := otlptracehttp.WithEndpoint(url)
+	exporter, err := otlptracehttp.New(ctx, opt)
 	if err != nil {
 		log.Panic().Err(err).Msg("")
 		panic(err)
