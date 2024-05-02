@@ -72,7 +72,7 @@ require (
 require (
 	github.com/DATA-DOG/go-txdb v0.1.8
 	github.com/gin-contrib/cors v1.7.2
-	github.com/gin-contrib/logger v1.1.1
+	github.com/gin-contrib/logger v1.1.2
 	github.com/gin-contrib/sessions v1.0.0
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
