@@ -101,6 +101,8 @@ github.com/gin-contrib/logger v1.0.0 h1:JCK5gYG1VVwLhahJaiFekMzjpoBMN480Tyw3lgs0
 github.com/gin-contrib/logger v1.0.0/go.mod h1:ExhM7p84ZZ6Uz9XEj8zGY1GIYDjSDPD132+MwHT4av0=
 github.com/gin-contrib/logger v1.1.1 h1:78Qzfpx3JvpnNX/6bErifIcnFqwbVKl2gS5WGExFPOs=
 github.com/gin-contrib/logger v1.1.1/go.mod h1:Cmqqcc6Yce4+r776VET1AcU4ydAR6sMKuDtBKLje20Y=
+github.com/gin-contrib/logger v1.1.2 h1:+y8VHqn5zAsAFnW6y/6GF93eXaCPFv/XPdqUCFeBMRg=
+github.com/gin-contrib/logger v1.1.2/go.mod h1:IXV9/7UPRIPJpAZ0DUOAZ/NLaCVzOzqqpQPQEF7u6fw=
 github.com/gin-contrib/sessions v0.0.5 h1:CATtfHmLMQrMNpJRgzjWXD7worTh7g7ritsQfmF+0jE=
 github.com/gin-contrib/sessions v0.0.5/go.mod h1:vYAuaUPqie3WUSsft6HUlCjlwwoJQs97miaG2+7neKY=
 github.com/gin-contrib/sessions v1.0.0 h1:r5GLta4Oy5xo9rAwMHx8B4wLpeRGHMdz9NafzJAdP8Y=
