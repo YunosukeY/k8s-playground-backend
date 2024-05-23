@@ -70,7 +70,7 @@ require (
 )
 
 require (
-	github.com/DATA-DOG/go-txdb v0.1.8
+	github.com/DATA-DOG/go-txdb v0.1.9
 	github.com/gin-contrib/cors v1.7.2
 	github.com/gin-contrib/logger v1.1.2
 	github.com/gin-contrib/sessions v1.0.1
