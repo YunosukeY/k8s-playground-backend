@@ -7,8 +7,8 @@ require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/gorilla/securecookie v1.1.2
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.1.0
-	github.com/redis/go-redis/extra/redisotel/v9 v9.0.5
-	github.com/redis/go-redis/v9 v9.5.2
+	github.com/redis/go-redis/extra/redisotel/v9 v9.5.3
+	github.com/redis/go-redis/v9 v9.5.3
 	github.com/segmentio/kafka-go v0.4.47
 	github.com/spf13/cobra v1.8.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.49.0
@@ -54,7 +54,7 @@ require (
 	github.com/prometheus/client_model v0.5.0 // indirect
 	github.com/prometheus/common v0.45.0 // indirect
 	github.com/prometheus/procfs v0.12.0 // indirect
-	github.com/redis/go-redis/extra/rediscmd/v9 v9.0.5 // indirect
+	github.com/redis/go-redis/extra/rediscmd/v9 v9.5.3 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/uptrace/opentelemetry-go-extra/otelsql v0.2.3 // indirect
