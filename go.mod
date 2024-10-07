@@ -1,6 +1,8 @@
 module github.com/YunosukeY/kind-backend
 
-go 1.19
+go 1.21
+
+toolchain go1.23.2
 
 require (
 	github.com/envoyproxy/protoc-gen-validate v1.0.4
@@ -20,6 +22,7 @@ require (
 )
 
 require (
+	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bytedance/sonic v1.11.6 // indirect
 	github.com/bytedance/sonic/loader v0.1.1 // indirect
@@ -34,7 +37,7 @@ require (
 	github.com/gabriel-vasile/mimetype v1.4.3 // indirect
 	github.com/go-logr/logr v1.4.1 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/go-sql-driver/mysql v1.7.1 // indirect
+	github.com/go-sql-driver/mysql v1.8.1 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/gorilla/context v1.1.2 // indirect
 	github.com/gorilla/sessions v1.2.2 // indirect
@@ -70,7 +73,7 @@ require (
 )
 
 require (
-	github.com/DATA-DOG/go-txdb v0.1.9
+	github.com/DATA-DOG/go-txdb v0.2.0
 	github.com/gin-contrib/cors v1.7.2
 	github.com/gin-contrib/logger v1.1.2
 	github.com/gin-contrib/sessions v1.0.1
