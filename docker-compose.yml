@@ -44,7 +44,7 @@ services:
       timeout: 1s
       retries: 10
   queue:
-    image: bitnami/kafka:3.8.1
+    image: bitnami/kafka:3.9.0
     container_name: queue
     environment:
       KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:2181
