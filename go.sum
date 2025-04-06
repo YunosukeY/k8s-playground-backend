@@ -639,6 +639,8 @@ github.com/DATA-DOG/go-txdb v0.1.8 h1:LHWCog6FEzwGCmWEH8/XfOgIYKfWfO9dpRr9KwR4VQ
 github.com/DATA-DOG/go-txdb v0.1.8/go.mod h1:l06JaBQdV+y4aWAmDmWj4NwfnJknEXBxg8d4B8sJzXA=
 github.com/DATA-DOG/go-txdb v0.1.9 h1:Xqacq+01M2Z8CHMs4oIkn7QhdjZk7YPnhL1jysJmwl0=
 github.com/DATA-DOG/go-txdb v0.1.9/go.mod h1:FiqV+UPzeI+VZmHxvVHIkrFW7DnG/BwB4KuaMRgUULw=
+github.com/DATA-DOG/go-txdb v0.2.1 h1:ic/cKLheUcjOHvqduJ349umI9KqQWny4idfnDyPEJWk=
+github.com/DATA-DOG/go-txdb v0.2.1/go.mod h1:Flb/TrTNAFotdSRIwUnM7BoJgT9AEX1Ysf863nYr5yk=
 github.com/JohnCGriffin/overflow v0.0.0-20211019200055-46fa312c352c/go.mod h1:X0CRv0ky0k6m906ixxpzmDRLvX58TFUKS2eePweuyxk=
 github.com/Microsoft/go-winio v0.4.11/go.mod h1:VhR8bwka0BXejwEJY73c50VrPtXAaKcyvVC4A4RozmA=
 github.com/Microsoft/go-winio v0.4.14/go.mod h1:qXqCSQ3Xa7+6tgxaGTIe4Kpcdsi+P8jBhyzoq1bpyYA=
