@@ -1,6 +1,8 @@
 module github.com/YunosukeY/kind-backend
 
-go 1.19
+go 1.21
+
+toolchain go1.24.2
 
 require (
 	github.com/envoyproxy/protoc-gen-validate v1.0.4
@@ -70,7 +72,7 @@ require (
 )
 
 require (
-	github.com/DATA-DOG/go-txdb v0.1.9
+	github.com/DATA-DOG/go-txdb v0.2.1
 	github.com/gin-contrib/cors v1.7.2
 	github.com/gin-contrib/logger v1.1.2
 	github.com/gin-contrib/sessions v1.0.1
